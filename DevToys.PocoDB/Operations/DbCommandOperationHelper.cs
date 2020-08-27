@@ -69,6 +69,8 @@ namespace DevToys.PocoDB
                 return;
 
             Init();
+
+            _Initialized = true;
         }
 
         public void SetParameters(DbCommand command, TCOMMAND commandObject)
