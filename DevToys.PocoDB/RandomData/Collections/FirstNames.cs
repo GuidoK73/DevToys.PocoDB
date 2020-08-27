@@ -1,0 +1,53 @@
+﻿namespace DevToys.PocoDB.RandomData
+{ 
+    internal static class FirstNames
+    {
+        public static readonly string[] Items = new string[] {
+            "Haesel","Maia","Ozias","Viktorin","Phelix","Rayder","Gaetana","Jerred","Myma","Fonzo",
+            "Guri","Sulem","Dotan","Anthelmette","Wiemer","Quito","Jannessa","Loic","Jensina","Tomes",
+            "Rodmertsje","Crescentia","Andronikus","Jorke","Marlize","Sadhbh","Olrik","Egje","Savannah","Dieuwer",
+            "Duveken","Geanne","Geno","Paoline","Battie","Anette","Stachys","Salvatore","Jazlynn","Wobje",
+            "Katjana","Amado","Elica","Michalina","Oholiba","Dagian","Kerian","Tjally","Antien","Chesbon",
+            "Sytjen","Didymus","Hermosa","Lourette","Conja","Christophina","Kozeba","Dawson","Felicienne","Tjomme",
+            "Alvis","Annemari","Melisenda","Ikka","Annie","Alexia","Kalea","Joska","Verones","Thorndike",
+            "Stevan","Matilde","Barnet","Jigeal","Guy","Phyliss","Tintina","Guntfried","Rhea","Hieremias",
+            "Eimert","Rivaldo","Coburn","Mathilde","Gaauwe","Agea","Torrie","Procopius","Keefe","Tjaltje",
+            "Joerie","Meinald","Joeanne","Klaassiena","Tsjol","Jacoba","Guarnerus","Seadach","Loedo","Mowerijntje",
+            "Mrabet","Airleas","Walburg","Burhleag","Ermin","Djoekje","Benji","Tintina","Corlinda","Iman",
+            "Earlina","Calldwr","Houtsje","Syriah","Maximillian","Doaitse","Sjuul","Adella","Atilla","Amald",
+            "Autarkia","Race","Wenneke","Alantsje","Hedvig","Delgado","Boetie","Kyria","Koleyna","Tomas",
+            "Genus","Arledge","Rita","Audreen","Pamina","Doedo","Sarlic","Alfede","Fulp","Assur",
+            "Taf","Achimot","Koopkje","Armanda","Menachem","Free","Darci","Lybrichje","Tammie","Namid",
+            "Lisanne","Glais","Otke","Keoma","Letya","Thyri","Amande","Trientien","Pelon","Annemerel",
+            "Avah","Kyma","Geurdinus","Effie","Arko","Chadrick","Gerion","Floriane","Broin","Halfryta",
+            "Helper","Schahrus","Meturato","Aarnd","Brinda","Asmes","Cuny","Strom","Giacomo","Annemargrie",
+            "Achmed","Karoline","Menjous","Sienna","Fre","Wiger","Garrnt","Dorrell","Jurianus","Sabah",
+            "Co","Sytsk","Emerentia","Eelsina","Wolfrick","Folke","Marjonne","Eldride","Aalderika","Jega",
+            "Wencke","Sture","Iokaste","Jinske","Egwin","Piton","Nittard","Ortelia","Gringolet","Jefferson",
+            "Nikki","Calliste","Lali","Mingan","Angelinda","Lawand","Tami","Joliena","Travon","Auxilia",
+            "Sal","Ayke","Rosanno","Foka","Coolie","Junius","Kennard","Guslenus","Adalmund","Ruthlyn",
+            "Ismael","Toar","Stinus","Storr","Ashleigh","Bedivere","Antonin","Caeley","Lieske","Lien",
+            "Edsard","Maie","Sileas","Alfhilde","Azuka","Albiia","Firmiaan","Mafku","Crogher","Henrik",
+            "Honoria","Berredina","Gachar","Sytj","Melinde","Silvio","Ante","Bearnt","Enric","Pimmetje",
+            "Dacia","Farquharson","Oense","Lautske","Agueda","Regy","Einbert","Misam","Leonides","Tsjomkje",
+            "Jeshurun","Paget","Tilak","Galvin","Scandy","Corentin","Dimpna","Raju","Darunia","Caroelien",
+            "Chus","Tionne","Chelsi","Lisabette","Goosse","Fineen","Lewy","Witte","Deidra","Delila",
+            "Allis","Vernie","Sike","Saranda","Gibeon","Valentine","Taeije","Emmeliek","Adil","Florencia",
+            "Pitrik","Maylon","Aleyn","Earwine","Titius","Naradi","Costello","Wysaby","Andreline","Iranjes",
+            "Makenzie","Estephanie","Taeike","Berea","Kyrian","Eloisee","Bethsaida","Bethann","Chitsa","Narbhla",
+            "Clust","Ellyce","Immique","Galtero","Takje","Kate","Sjutsje","Arsenio","Whistler","Spiros",
+            "Etilka","Uneke","Poll","Suse","Hefeydd","Keiki","Stockhard","Thorley","Merinus","Murillo",
+            "Beier","Liel","Toen","Ramy","Lumke","Paige","Andriena","Oya","Eberhard","Archimedes",
+            "Sabriye","Quincy","Autgertsje","Fausia","Bibienne","Jakoba","Conal","Mylgert","Gertina","Gualtier",
+            "Saepke","Barmond","Aelfreda","Charim","Braelt","Milana","Kileisha","Acco","Non","Agetha",
+            "Halsey","Daimh","Jakie","Jishar","Lebertus","Machael","Geertrudus","Mirre","Patrobas","Burny",
+            "Janni","Billie","Salamon","Syriah","Anat","Kendrew","Sergine","Humfroi","Pitrik","Tynan",
+            "Francisquito","Clodia","Kirit","Eense","Sikyon","Achaje","Lalor","Persephone","Malmuirie","Treabhar",
+            "Christopfer","Amerens","Aglaval","Dinsmore","Mollo","Lummetje","Enrica","Luerdse","Paupoer","Julio",
+            "Aytac","Just","Tyrese","Creedon","Thomdic","Muata","Eluwilussit","Benaja","Beiki","Luki",
+            "Sammai","Ayasun","Dominick","Radwan","Moriarty","Corette","Merijn","Clancy","Marijtje","Lamy",
+            "Altrut","Luvina","Ambrosia","Ronli","Walinda","Henjo","Azzurra","Leopoldo","Dafinus","Ingelko",
+            "Diondre","Diedrich","Nanni","Desarae","Schaddoc","Rubiny","Dominiq","Fresina","Geauke","Chandler"
+        };
+    }
+}

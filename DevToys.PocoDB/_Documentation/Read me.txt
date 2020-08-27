@@ -1,0 +1,14 @@
+﻿PocoDB basically consists of 3 wrappers using reflection.
+
+1.	DataReader
+	-	The result of the datareader is mapped to Poco object and yielded.
+
+2.	DbCommand
+	-	CommandText, Procedure, Sql Statement is mapped from a poco object to A System.Data.Common.DbCommand Object.
+
+3.	DbParameter
+	-	DBParameter properties are mapped from a poco object to System.Data.Common.DbParameter.
+	 
+
+
+
