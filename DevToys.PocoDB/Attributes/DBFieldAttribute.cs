@@ -7,7 +7,7 @@ using DevToys.PocoDB.Enums;
 namespace DevToys.PocoDB.Attributes
 { 
     public enum ReaderDefaults
-    {
+    { 
         UseDefaultValueProperty = 0,
 
         /// <summary>DateTime</summary>
@@ -57,6 +57,7 @@ namespace DevToys.PocoDB.Attributes
 
         /// <summary>
         /// Indicates whether this data must be Encrypted. (Only works for String and Byte[] properties). 
+        /// WARNING: this can quickly become a performance drain.
         /// </summary>
         public bool Decrypt { get; set; } = false;
 

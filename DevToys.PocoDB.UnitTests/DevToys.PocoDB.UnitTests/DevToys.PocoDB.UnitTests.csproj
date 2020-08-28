@@ -52,6 +52,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StopWatch.cs" />
     <Compile Include="TestCommandOperationTransaction.cs" />
     <Compile Include="TestCustomDataProvider.cs" />
     <Compile Include="PocoObjects\BinaryDataCommandOperations.cs" />

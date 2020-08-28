@@ -1,6 +1,7 @@
 ﻿using DevToys.PocoDB.Operations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PocoDBConsoleAppTest.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
  
@@ -12,6 +13,10 @@ namespace DevToys.PocoDB.UnitTests
         [TestMethod]
         public void GetCompanyById()
         {
+            // NOTE:
+            // Each construction of DbCommandOperation means it does initializion on first call.
+            // when using multiple times it's best to set the declaration on class level instead of method level.
+
             var operation = new DbCommandOperation<Company, GetCompanyById>("Local");
             Company _result = operation.ExecuteSingleReader(new GetCompanyById() { Id = 1 });
         }
@@ -59,7 +64,7 @@ namespace DevToys.PocoDB.UnitTests
                 ZipCode = "4624JC",
                 CompanyType = CompanyType.NV,
                 EncryptedText = "Guido Kleijer"
-            };
+            }; 
 
             operation.ExecuteNonQuery(parameters);
 
@@ -73,7 +78,15 @@ namespace DevToys.PocoDB.UnitTests
             var operation = new DbCommandOperation<Company, GetCompanyAll>("Local");
             IEnumerable<Company> _result = operation.ExecuteReader(new GetCompanyAll() { });
 
+            StopWatch _watch = new StopWatch();
+
+            _watch.Start();
+
             var _resultMaterialized = _result.ToList();
+
+            _watch.Stop();
+
+            Console.WriteLine(_watch.Duration);
         }
 
         [TestMethod]

@@ -1,15 +1,13 @@
 ﻿using DevToys.PocoDB.Attributes;
-using DevToys.PocoDB.Encryption;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using System.Security;
-
+ 
 namespace DevToys.PocoDB
-{ 
+{
     internal sealed class DbCommandOperationHelper<TCOMMAND>
     {
         private ConnectionConfig _Config;
@@ -28,38 +26,18 @@ namespace DevToys.PocoDB
         public DBCommandAttribute CommandAttribute { get; private set; }
         public Dictionary<string, PropertyInfo> Properties { get; private set; }
 
-        public void GetOutputParameters(DbCommand command, TCOMMAND commandObject)
+        public void GetParameters(DbCommand command, TCOMMAND commandObject)
         {
             foreach (string name in _OutputParameters)
             {
-                DBParameterAttribute attribute = Attributes[name];
-                PropertyInfo property = Properties[name];
+                DBParameterAttribute _attribute = Attributes[name];
+                PropertyInfo _property = Properties[name];
+                DbParameter _parameter = command.Parameters[_attribute.Name];
 
-                if (!DataUtils.IsSimpleType(property.PropertyType) || property.PropertyType.IsEnum)
-                    throw new DataException("Output parameter property {0} must be a simple type", property.Name);
+                if (!DataUtils.IsSimpleType(_property.PropertyType) || _property.PropertyType.IsEnum)
+                    throw new DataException("Output parameter property {0} must be a simple type", _property.Name);
 
-                object val = command.Parameters[string.Format("{0}", attribute.Name)].Value;
-
-                val = FieldEncryption.Decrypt(val, _Password, attribute.Encrypt);
-
-                if (val != DBNull.Value)
-                {
-                    if (property.PropertyType.IsEnum)
-                        property.SetValue(commandObject, Enum.Parse(property.PropertyType, val.ToString()), null);
-                    else
-                        property.SetValue(commandObject, val);
-                }
-                else
-                {
-                    if (property.PropertyType != typeof(string))
-                        if (Nullable.GetUnderlyingType(property.PropertyType) == null)
-                            throw new DataException("Output parameter property {0} cannot contain null value", property.Name);
-
-                    if (property.PropertyType.IsEnum)
-                        property.SetValue(commandObject, Enum.Parse(property.PropertyType, val.ToString()), null);
-                    else
-                        property.SetValue(commandObject, null);
-                }
+                _attribute.GetParameterValue<TCOMMAND>(commandObject, _property, _parameter, _Password);
             }
         }
 
@@ -82,7 +60,7 @@ namespace DevToys.PocoDB
 
                 IDbDataParameter parameter = command.CreateParameter();
                 parameter.Direction = attribute.Direction;
-                attribute.InitParameter<TCOMMAND>(commandObject, property, parameter, _Password);
+                attribute.SetParameterValue<TCOMMAND>(commandObject, property, parameter, _Password);
                 command.Parameters.Add(parameter);
             }
         }

@@ -60,7 +60,6 @@
     <Compile Include="Enums\Enumerations.cs" />
     <Compile Include="Operations\BaseDataOperation.cs" />
     <Compile Include="Operations\BulkInsertOperation.cs" />
-    <Compile Include="Operations\DataTableMapperOperation.cs" />
     <Compile Include="Operations\DbCommandOperation.cs" />
     <Compile Include="Operations\ResultObjectCreator.cs" />
     <Compile Include="Operations\DynamicSqlOperation.cs" />

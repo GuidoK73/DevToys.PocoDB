@@ -8,9 +8,9 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
-
+ 
 namespace DevToys.PocoDB.Operations
-{ 
+{
     public abstract class BaseDataOperation
     {
         /// <param name="configConnectionName">Points to ConnectionString Configuration in section DevToys.PocoDB in App.Config</param>
@@ -41,9 +41,12 @@ namespace DevToys.PocoDB.Operations
     public abstract class BaseDataOperation<TRESULTOBJECT> : BaseDataOperation
         where TRESULTOBJECT : class, new()
     {
-        private Dictionary<string, DBFieldAttribute> _Attributes = new Dictionary<string, DBFieldAttribute>();
+        private DBFieldAttribute[] _Attributes;
         private bool _Initialized = false;
-        private Dictionary<string, PropertyInfo> _Properties = new Dictionary<string, PropertyInfo>();
+
+        //private Dictionary<string, DBFieldAttribute> _Attributes = new Dictionary<string, DBFieldAttribute>();
+        //private Dictionary<string, PropertyInfo> _Properties = new Dictionary<string, PropertyInfo>();
+        private PropertyInfo[] _Properties;
 
         /// <param name="configConnectionName">Reference to connection in DevToys.PocoDB config section</param>
         protected BaseDataOperation(string configConnectionName) : base(configConnectionName) { }
@@ -58,22 +61,6 @@ namespace DevToys.PocoDB.Operations
         /// <param name="configConnectionName">Points to ConnectionString Configuration in section DevToys.PocoDB in App.Config</param>
         protected BaseDataOperation(DbConnectionStringBuilder connectionString, string configConnectionName) : base(connectionString, configConnectionName) { }
 
-        protected TRESULTOBJECT ReadDataRow(DataTable table, DataRow row)
-        {
-            Init(table);
-
-            // Create new object
-            TRESULTOBJECT _result = new TRESULTOBJECT();
-
-            foreach (KeyValuePair<string, PropertyInfo> kvp in _Properties)
-            {
-                DBFieldAttribute _attribute = _Attributes[kvp.Key];
-                SetPropertyValue(kvp.Value, _result, row[kvp.Key], _attribute.ReaderDefaultValue, _attribute.StrictMapping, _attribute.Decrypt);
-            }
-
-            return _result;
-        }
-
         /// <summary>Reads a datarow and converts it to TObject</summary>
         protected TRESULTOBJECT ReadDataRow(IDataReader reader)
         {
@@ -82,46 +69,14 @@ namespace DevToys.PocoDB.Operations
             // Create new object
             TRESULTOBJECT _result = new TRESULTOBJECT();
             // create a new base object so we can invoke base methods.
-
-            foreach (KeyValuePair<string, PropertyInfo> kvp in _Properties)
+            for (int ii = 0; ii < reader.FieldCount; ii++)
             {
-                DBFieldAttribute _attribute = _Attributes[kvp.Key];
-                SetPropertyValue(kvp.Value, _result, reader[kvp.Key], _attribute.ReaderDefaultValue, _attribute.StrictMapping, _attribute.Decrypt);
+                var _attribute = _Attributes[ii];
+                var _property = _Properties[ii];
+                SetPropertyValue(_property, _result, reader[ii], _attribute.ReaderDefaultValue, _attribute.StrictMapping, _attribute.Decrypt);
             }
+
             return _result;
-        }
-
-        private void Init()
-        {
-            if (_Initialized)
-                return;
-
-            _Attributes = typeof(TRESULTOBJECT)
-                .GetProperties().Where(p => p.GetCustomAttribute<DBFieldAttribute>() != null)
-                .Select(p => new { Key = p.GetCustomAttribute<DBFieldAttribute>().Field, Value = p.GetCustomAttribute<DBFieldAttribute>() })
-                .ToDictionary(p => p.Key, p => p.Value);
-
-            _Properties = typeof(TRESULTOBJECT)
-                .GetProperties().Where(p => p.GetCustomAttribute<DBFieldAttribute>() != null)
-                .Select(p => new { Key = p.GetCustomAttribute<DBFieldAttribute>().Field, Value = p })
-                .ToDictionary(p => p.Key, p => p.Value);
-        }
-
-        private void Init(DataTable datatable)
-        {
-            if (_Initialized)
-                return;
-
-            Init();
-
-            List<string> _readerFieldNames = new List<string>();
-
-            foreach (DataColumn column in datatable.Columns)
-                _readerFieldNames.Add(column.ColumnName);
-
-            InitValidateFieldNames(_readerFieldNames);
-
-            _Initialized = true;
         }
 
         private void Init(IDataReader reader)
@@ -129,19 +84,38 @@ namespace DevToys.PocoDB.Operations
             if (_Initialized)
                 return;
 
-            Init();
+            string[] _readerFieldNames = DataUtils.GetReaderColumnsArray(reader);
 
-            List<string> _readerFieldNames = DataUtils.GetReaderColumns(reader);
+            Dictionary<string, DBFieldAttribute> _attributes = typeof(TRESULTOBJECT)
+                    .GetProperties().Where(p => p.GetCustomAttribute<DBFieldAttribute>() != null)
+                    .Select(p => new { Key = p.GetCustomAttribute<DBFieldAttribute>().Field.ToLower(), Value = p.GetCustomAttribute<DBFieldAttribute>() })
+                    .ToDictionary(p => p.Key, p => p.Value);
 
-            InitValidateFieldNames(_readerFieldNames);
+            Dictionary<string, PropertyInfo> _properties = typeof(TRESULTOBJECT)
+                .GetProperties().Where(p => p.GetCustomAttribute<DBFieldAttribute>() != null)
+                .Select(p => new { Key = p.GetCustomAttribute<DBFieldAttribute>().Field.ToLower(), Value = p })
+                .ToDictionary(p => p.Key, p => p.Value);
+
+            InitValidateFieldNames(_readerFieldNames, _properties);
+
+            _Attributes = new DBFieldAttribute[_readerFieldNames.Length];
+            _Properties = new PropertyInfo[_readerFieldNames.Length];
+
+            for (int ii = 0; ii < _readerFieldNames.Length; ii++)
+            {
+                string _name = _readerFieldNames[ii].ToLower();
+                _Attributes[ii] = _attributes[_name];
+                _Properties[ii] = _properties[_name];
+            }
+
             _Initialized = true;
         }
 
-        private void InitValidateFieldNames(List<string> _readerFieldNames)
+        private void InitValidateFieldNames(string[] _readerFieldNames, Dictionary<string, PropertyInfo> properties)
         {
-            foreach (string column in _Properties.Keys)
+            foreach (string column in properties.Keys)
             {
-                if (_readerFieldNames.Where(p => p.Equals(column, StringComparison.OrdinalIgnoreCase)).FirstOrDefault() == null)
+                if (_readerFieldNames.Where(p => p.ToLower().Equals(column, StringComparison.OrdinalIgnoreCase)).FirstOrDefault() == null)
                 {
                     string message = string.Format("Column '{0}' does not exist in the result DataSet.", column);
                     throw new DataException(message);

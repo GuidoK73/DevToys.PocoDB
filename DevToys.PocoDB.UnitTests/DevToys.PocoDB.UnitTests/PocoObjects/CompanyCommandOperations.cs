@@ -111,7 +111,7 @@ namespace PocoDBConsoleAppTest.Data
 
     [DBCommand(@"insert into dbo.Company ([name], Adress, Country, ZipCode, HouseNumber, CompanyType, EncryptedText) 
                     values (@name, @Adress, @Country, @ZipCode, @HouseNumber, @CompanyType, @EncryptedText);
-	                set @OutputId = @@IDENTITY
+	             set @OutputId = @@IDENTITY 
 ", commandtype: CommandType.Text)]
     public class InsertCompanyRandom
     {

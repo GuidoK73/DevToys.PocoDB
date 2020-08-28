@@ -36,7 +36,7 @@ namespace PocoDBConsoleAppTest.Data
 		[DBRandomParameter("Id")]
 		public int Id { get; set; } = 0;
 
-		[DBRandomParameter("Name", RandomStringType = RandomStringType.FullName, Items = new object[] { 1, 2 } )]
+		[DBRandomParameter("Name", RandomStringType = RandomStringType.FullName)]
 		public string Name { get; set; } = string.Empty;
 
 		[DBRandomParameter("Adress", RandomStringType = RandomStringType.Adress)]
@@ -51,10 +51,10 @@ namespace PocoDBConsoleAppTest.Data
 		[DBRandomParameter("HouseNumber", RandomStringType = RandomStringType.Number, Min = 10, Max = 200)]
 		public string HouseNumber { get; set; } = string.Empty;
 
-		[DBRandomParameter("CompanyType")]
+		[DBRandomParameter("CompanyType")] 
 		public CompanyType CompanyType { get; set; } = CompanyType.BV;
 
-		[DBRandomParameter("EncryptedText", RandomStringType = RandomStringType.Text, Max = 10, Encrypt = true)]
-		public string EncryptedText { get; set; }
+		[DBParameter("EncryptedText", Encrypt = true)]
+		public string EncryptedText { get; set; } = string.Empty; // Will drain performance.
 	}
 }

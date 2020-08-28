@@ -1,10 +1,8 @@
-﻿using DevToys.PocoDB.Attributes;
-using DevToys.PocoDB.Enums;
-using DevToys.PocoDB.Factory;
+﻿using DevToys.PocoDB.Factory;
 using System.Data;
 using System.Data.Common;
 using System.Text;
-
+ 
 namespace DevToys.PocoDB.Operations
 { 
     /// <summary>
@@ -169,7 +167,7 @@ namespace DevToys.PocoDB.Operations
 
                     IDataReader reader = command.ExecuteReader();
 
-                    _Helper.GetOutputParameters(command, commandObject);
+                    _Helper.GetParameters(command, commandObject);
 
                     bool b = reader.Read();
                     if (b)

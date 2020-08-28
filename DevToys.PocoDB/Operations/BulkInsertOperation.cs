@@ -6,9 +6,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-
+ 
 namespace DevToys.PocoDB.Operations
-{ 
+{
     /// <summary>
     /// SQLCLIENT CONNECTION ONLY
     ///
@@ -20,12 +20,12 @@ namespace DevToys.PocoDB.Operations
     {
         private int _Batchsize = 0;
 
-        private Dictionary<string, DBParameterAttribute> _DbParameters = new Dictionary<string, DBParameterAttribute>();
+        private DBParameterAttribute[] _DbParameters;
 
-        private Dictionary<string, PropertyInfo> _DBProperties = new Dictionary<string, PropertyInfo>();
+        private PropertyInfo[] _DBProperties;
 
         private bool _Initialized = false;
-
+        private string[] _Names;
         private string _TableName;
 
         /// <summary>
@@ -70,10 +70,10 @@ namespace DevToys.PocoDB.Operations
 
             var _table = new DataTable(_TableName);
 
-            foreach (string key in _DBProperties.Keys)
+            for (int xx = 0; xx < _Names.Length; xx++)
             {
-                var property = _DBProperties[key];
-                var column = new DataColumn(key, property.PropertyType);
+                var property = _DBProperties[xx];
+                var column = new DataColumn(_Names[xx], property.PropertyType);
                 _table.Columns.Add(column);
             }
 
@@ -82,15 +82,14 @@ namespace DevToys.PocoDB.Operations
             foreach (TINSERTOBJECT item in data)
             {
                 var row = _table.NewRow();
-                foreach (string key in _DBProperties.Keys)
+
+                for (int xx = 0; xx < _Names.Length; xx++)
                 {
-                    var property = _DBProperties[key];
-                    var parameter = GetParameter(item, _DbParameters[key], property);
-                    //if (property.PropertyType.IsEnum)
-                    //    row[key] = (int)parameter.Value;
-                    //else
-                    row[key] = Convert.ChangeType(parameter.Value, property.PropertyType);
+                    var property = _DBProperties[xx];
+                    var parameter = GetParameter(item, _DbParameters[xx], property);
+                    row[_Names[xx]] = Convert.ChangeType(parameter.Value, property.PropertyType);
                 }
+
                 _table.Rows.Add(row);
 
                 if (ii % _Batchsize == 0 && ii > 0)
@@ -109,7 +108,7 @@ namespace DevToys.PocoDB.Operations
         {
             IDbDataParameter parameter = new SqlParameter();
             parameter.Direction = attribute.Direction;
-            attribute.InitParameter(commandObject, property, parameter, Config.FieldEncryptionPasswordEncrypted);
+            attribute.SetParameterValue(commandObject, property, parameter, Config.FieldEncryptionPasswordEncrypted);
             return parameter;
         }
 
@@ -118,13 +117,22 @@ namespace DevToys.PocoDB.Operations
             if (_Initialized)
                 return;
 
+            _Names = typeof(TINSERTOBJECT).GetProperties().Where(p => p.GetCustomAttribute(typeof(DBParameterAttribute)) != null)
+                .Select(p => p.GetCustomAttribute<DBParameterAttribute>().Name)
+                .OrderBy(p => p)
+                .ToArray();
+
             _DBProperties = typeof(TINSERTOBJECT).GetProperties().Where(p => p.GetCustomAttribute(typeof(DBParameterAttribute)) != null)
-                .Select(p => new { Name = p.GetCustomAttribute<DBParameterAttribute>().Name, Parameter = p })
-                .ToDictionary(p => p.Name, p => p.Parameter);
+                .Select(p => new { Name = p.GetCustomAttribute<DBParameterAttribute>().Name, Property = p })
+                .OrderBy(p => p.Name)
+                .Select(p => p.Property)
+                .ToArray();
 
             _DbParameters = typeof(TINSERTOBJECT).GetProperties().Where(p => p.GetCustomAttribute(typeof(DBParameterAttribute)) != null)
                 .Select(p => new { Name = p.GetCustomAttribute<DBParameterAttribute>().Name, Parameter = p.GetCustomAttribute<DBParameterAttribute>() })
-                .ToDictionary(p => p.Name, p => p.Parameter);
+                .OrderBy(p => p.Name)
+                .Select(p => p.Parameter)
+                .ToArray();
 
             _Initialized = true;
         }
@@ -138,8 +146,8 @@ namespace DevToys.PocoDB.Operations
                     connection.Open();
                     bulkcopy.DestinationTableName = _TableName;
 
-                    foreach (string key in _DBProperties.Keys)
-                        bulkcopy.ColumnMappings.Add(new SqlBulkCopyColumnMapping(key, key));
+                    for (int xx = 0; xx < _Names.Length; xx++)
+                        bulkcopy.ColumnMappings.Add(new SqlBulkCopyColumnMapping(_Names[xx], _Names[xx]));
 
                     bulkcopy.WriteToServer(table);
                 }

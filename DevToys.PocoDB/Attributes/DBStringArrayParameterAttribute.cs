@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevToys.PocoDB.Encryption;
+using System;
 using System.Collections;
 using System.Data;
 using System.Reflection;
@@ -18,7 +19,7 @@ namespace DevToys.PocoDB.Attributes
         /// <param name="name">DbParameter Name</param>
         public DBStringArrayParameterAttribute(string name) : base(name) {  }
 
-        public override void InitParameter<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter, SecureString password)
+        public override void SetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter, SecureString password)
         {
             object _value = property.GetValue(commandObject);
             string _valuestring = null;
@@ -44,6 +45,12 @@ namespace DevToys.PocoDB.Attributes
                 parameter.Value = DBNull.Value;
             else
                 parameter.Value = _valuestring;
+        }
+         
+
+        public override void GetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter, SecureString password)
+        {
+            throw new DataException($"Output parameters not supported for '{nameof(DBStringArrayParameterAttribute)}'.");
         }
     }
 }

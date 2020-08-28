@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-
+ 
 namespace DevToys.PocoDB.Operations
 { 
     /// <summary>
@@ -99,7 +99,7 @@ namespace DevToys.PocoDB.Operations
                 else
                     command.ExecuteNonQuery();
 
-                _Helper.GetOutputParameters(command, commandObject);
+                _Helper.GetParameters(command, commandObject);
             }
             return _result;
         }
@@ -175,7 +175,7 @@ namespace DevToys.PocoDB.Operations
 
                     IDataReader reader = command.ExecuteReader();
 
-                    _Helper.GetOutputParameters(command, commandObject);
+                    _Helper.GetParameters(command, commandObject);
 
                     while (reader.Read())
                     {
@@ -204,7 +204,7 @@ namespace DevToys.PocoDB.Operations
 
                 IDataReader reader = command.ExecuteReader();
 
-                _Helper.GetOutputParameters(command, commandObject);
+                _Helper.GetParameters(command, commandObject);
 
                 while (reader.Read())
                 {
