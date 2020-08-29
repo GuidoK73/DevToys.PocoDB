@@ -7,8 +7,8 @@ using System.Data.SqlClient;
 namespace DevToys.PocoDB.Factory
 {
     internal class ConnectionFactoryInitializer
-    { 
-        public ConnectionFactoryInitializer()  { }
+    {
+        public ConnectionFactoryInitializer() { }
         public Dictionary<string, Type> Init()
         {
             var _types = new Dictionary<string, Type>

@@ -1,5 +1,5 @@
 ﻿namespace DevToys.PocoDB.RandomData
-{ 
+{
     internal static class Words
     {
         public static readonly string[] Items = new string[]

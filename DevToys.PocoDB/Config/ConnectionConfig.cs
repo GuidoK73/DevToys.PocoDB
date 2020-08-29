@@ -2,10 +2,10 @@
 using System.Globalization;
 
 namespace DevToys.PocoDB
-{ 
+{
     public class ConnectionConfig : ConfigurationElement
     {
-        public ConnectionConfig() {  }
+        public ConnectionConfig() { }
 
         [ConfigurationProperty("Name", DefaultValue = "", IsRequired = true, IsKey = true)]
         public string Name

@@ -4,7 +4,7 @@ using System.Data.Common;
 
 
 namespace DevToys.PocoDB.Factory
-{ 
+{
     /// <summary>
     /// Default Connections: SqlClient, OleDb, Odbc
     /// </summary>

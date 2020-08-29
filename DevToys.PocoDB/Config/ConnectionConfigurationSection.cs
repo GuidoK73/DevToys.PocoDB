@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
 
 namespace DevToys.PocoDB
-{ 
+{
     public class ConnectionConfigurationSection : ConfigurationSection
     {
         [ConfigurationProperty("Connections", IsDefaultCollection = false)]

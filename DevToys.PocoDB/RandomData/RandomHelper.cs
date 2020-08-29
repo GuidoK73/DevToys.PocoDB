@@ -2,7 +2,7 @@
 using System.Text;
 
 namespace DevToys.PocoDB.RandomData
-{ 
+{
     internal static class RandomHelper
     {
         private static char[] _SpecialChars = new char[] { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '{', '}', '[', ']', '?', '!' };
@@ -10,7 +10,7 @@ namespace DevToys.PocoDB.RandomData
         private static int _Seed = DateTime.Now.Millisecond;
         private static Random Rnd = new Random(_Seed);
 
-        public static string RandomWord() => Words.Items[Rnd.Next(0, Words.Items.Length -1)];
+        public static string RandomWord() => Words.Items[Rnd.Next(0, Words.Items.Length - 1)];
 
         public static string RandomCountry() => Countries.Items[Rnd.Next(0, Countries.Items.Length - 1)];
 
@@ -88,7 +88,7 @@ namespace DevToys.PocoDB.RandomData
         public static Enum RandomEnum(Type enumtype)
         {
             Array _items = Enum.GetValues(enumtype);
-            int _max = _items.Length;            
+            int _max = _items.Length;
             return (Enum)_items.GetValue(Rnd.Next(0, _max));
         }
 
@@ -99,7 +99,7 @@ namespace DevToys.PocoDB.RandomData
         public static string RandomText(int wordcount)
         {
             StringBuilder _sb = new StringBuilder();
-            for (int ii =0; ii <wordcount; ii++)
+            for (int ii = 0; ii < wordcount; ii++)
             {
                 _sb.Append(RandomWord());
             }

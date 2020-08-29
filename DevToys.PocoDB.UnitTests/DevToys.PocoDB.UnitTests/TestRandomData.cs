@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PocoDBConsoleAppTest.Data;
 
 namespace DevToys.PocoDB.UnitTests
-{ 
+{
     [TestClass]
     public class TestRandomData
     {

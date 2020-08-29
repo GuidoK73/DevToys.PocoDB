@@ -2,7 +2,7 @@
 using System.Data;
 
 namespace DevToys.PocoDB.Attributes
-{ 
+{
     /// <summary>
     /// Defines how TCOMMAND for DBCommandOperation is used.
     /// </summary>

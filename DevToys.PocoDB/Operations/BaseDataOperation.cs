@@ -7,7 +7,7 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
- 
+
 namespace DevToys.PocoDB.Operations
 {
     public abstract class BaseDataOperation

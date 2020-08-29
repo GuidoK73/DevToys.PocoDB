@@ -9,14 +9,14 @@ namespace DevToys.PocoDB.UnitTests
     /// <summary>
     /// Wrapper arround System.Data.SqlClient.SqlBulkCopy
     /// </summary>
-    [TestClass] 
+    [TestClass]
     public class TestBulkInsert
     {
         [TestMethod]
         public void BulkInsertCompany()
         {
             List<BulkCompany> _data = new List<BulkCompany>();
-             
+
             for (int ii = 0; ii < 10000; ii++)
                 _data.Add(new BulkCompany() { Name = "Guido", ZipCode = "4624JC", CompanyType = CompanyType.LLC });
 

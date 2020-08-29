@@ -9,7 +9,7 @@ using System.Linq;
 using System.Reflection;
 
 namespace DevToys.PocoDB.Operations
-{ 
+{
     /// <summary>
     /// Class for executing sql statements and mapping them to dynamic ExpandoObjects.
     /// All property names will be cleaned from non letters.
@@ -30,12 +30,12 @@ namespace DevToys.PocoDB.Operations
         public DynamicSqlOperation(ConnectionConfig config) : base(config) { }
 
         /// <param name="configConnectionName">Points to ConnectionString Configuration in section DevToys.PocoDB in App.Config</param>
-        public DynamicSqlOperation(DbConnectionStringBuilder connectionString, string configConnectionName) : base(connectionString, configConnectionName)  { }
+        public DynamicSqlOperation(DbConnectionStringBuilder connectionString, string configConnectionName) : base(connectionString, configConnectionName) { }
 
         #region ExecuteReader
 
         public IEnumerable<dynamic> ExecuteReader(string commandText) => ExecuteReader(commandText, CommandType.Text, 30, new IDbDataParameter[0]);
-        
+
         public IEnumerable<dynamic> ExecuteReader(string commandText, CommandType commandtype) => ExecuteReader(commandText, commandtype, 30, new IDbDataParameter[0]);
 
         public IEnumerable<dynamic> ExecuteReader(string commandText, CommandType commandtype, int commandtimeout) => ExecuteReader(commandText, commandtype, commandtimeout, new IDbDataParameter[0]);
@@ -146,11 +146,11 @@ namespace DevToys.PocoDB.Operations
         #region ExecuteSingleReader
 
         public dynamic ExecuteSingleReader(string commandText) => ExecuteSingleReader(commandText, CommandType.Text, 30, null);
-      
+
         public dynamic ExecuteSingleReader(string commandText, CommandType commandtype) => ExecuteSingleReader(commandText, commandtype, 30, null);
 
         public dynamic ExecuteSingleReader(string commandText, CommandType commandtype, int commandtimeout) => ExecuteSingleReader(commandText, commandtype, commandtimeout, null);
-     
+
         public dynamic ExecuteSingleReader(string commandText, CommandType commandtype, int commandtimeout, params IDbDataParameter[] parameters) => ExecuteReader(commandText, commandtype, commandtimeout, parameters).FirstOrDefault();
 
         #endregion
@@ -169,7 +169,7 @@ namespace DevToys.PocoDB.Operations
 
         #region ExecuteScalar
 
-        public object ExecuteScalar(string sql, dynamic parameters, CommandType commandType ) => Execute(sql, parameters, ExecType.Scalar, commandType, 30);
+        public object ExecuteScalar(string sql, dynamic parameters, CommandType commandType) => Execute(sql, parameters, ExecType.Scalar, commandType, 30);
 
         public object ExecuteScalar(string sql, dynamic parameters, CommandType commandType, int commandTimeOut) => Execute(sql, parameters, ExecType.Scalar, commandType, commandTimeOut);
 
@@ -191,7 +191,7 @@ namespace DevToys.PocoDB.Operations
 
         #endregion
 
-        private object Execute(string sql, dynamic parameters, ExecType execType, CommandType commandType, int commandTimeOut )
+        private object Execute(string sql, dynamic parameters, ExecType execType, CommandType commandType, int commandTimeOut)
         {
             object _result = null;
 

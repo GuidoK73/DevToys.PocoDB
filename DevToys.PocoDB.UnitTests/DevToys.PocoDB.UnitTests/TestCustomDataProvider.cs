@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 
 namespace DevToys.PocoDB.UnitTests
-{ 
+{
     /// <summary>
     /// Use ConnectionFactory.Instance to add a Custom Connection Object.
     /// 

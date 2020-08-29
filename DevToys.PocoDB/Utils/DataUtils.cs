@@ -4,7 +4,7 @@ using System.Data;
 using System.Text;
 
 namespace DevToys.PocoDB
-{ 
+{
     internal static class DataUtils
     {
         public const char _DOUBLEQUOTE = '"';
@@ -209,7 +209,7 @@ namespace DevToys.PocoDB
 
             if (type == typeof(Byte))
                 return NetType.Byte;
-             
+
             if (type == typeof(SByte))
                 return NetType.SByte;
 

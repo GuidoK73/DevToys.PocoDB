@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PocoDBConsoleAppTest.Data;
 using System;
 using System.Data.Common;
- 
+
 namespace DevToys.PocoDB.UnitTests
 {
     [TestClass]
@@ -19,7 +19,7 @@ namespace DevToys.PocoDB.UnitTests
 
             var operation1 = new DbCommandOperation<InsertCompanyByProcedure>("Local");
             var operation2 = new DbCommandOperation<InsertCompanyBySqlStatement>("Local");
-            
+
             using (DbConnection connection = operation1.CreateConnection())
             {
                 // operation1.CreateConnection() : operation1 determines the connection to use.
@@ -32,7 +32,13 @@ namespace DevToys.PocoDB.UnitTests
                     {
                         InsertCompanyByProcedure insert1 = new InsertCompanyByProcedure()
                         {
-                            Adress = "", Country = "NLD",  HouseNumber = "", Name = "A Company Name",   ZipCode = "4624JC",  CompanyType = CompanyType.NV, Text = "Guido Kleijer2"
+                            Adress = "",
+                            Country = "NLD",
+                            HouseNumber = "",
+                            Name = "A Company Name",
+                            ZipCode = "4624JC",
+                            CompanyType = CompanyType.NV,
+                            Text = "Guido Kleijer2"
                         };
 
                         operation1.ExecuteNonQuery(connection, transaction, insert1);
@@ -42,7 +48,13 @@ namespace DevToys.PocoDB.UnitTests
                         // Too large ZipCode
                         InsertCompanyBySqlStatement insert2 = new InsertCompanyBySqlStatement()
                         {
-                            Adress = "", Country = "NLD", HouseNumber = "", Name = "A Company Name ",ZipCode = "4624JC TO LONG AAAAAAAAAAAbbbbbbbbbbbAAAAAAAAA TO LONG", CompanyType = CompanyType.NV, Text = "Guido Kleijer"
+                            Adress = "",
+                            Country = "NLD",
+                            HouseNumber = "",
+                            Name = "A Company Name ",
+                            ZipCode = "4624JC TO LONG AAAAAAAAAAAbbbbbbbbbbbAAAAAAAAA TO LONG",
+                            CompanyType = CompanyType.NV,
+                            Text = "Guido Kleijer"
                         };
 
                         operation2.ExecuteNonQuery(connection, transaction, insert2);
@@ -56,7 +68,7 @@ namespace DevToys.PocoDB.UnitTests
                     {
                         transaction.Rollback();
                     }
-                }                
+                }
                 connection.Close();
             }
         }

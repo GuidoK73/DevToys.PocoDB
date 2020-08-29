@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
- 
+
 namespace DevToys.PocoDB.Operations
-{ 
+{
     /// <summary>
     /// Class for executing NonQuery or Scalar sql statements. Parameters are parsed by DbCommandOperation decorated with DBCommandAttribute and DBParameterAttribute attributes.
     /// 
@@ -19,11 +19,11 @@ namespace DevToys.PocoDB.Operations
         private DbCommandOperationHelper<TCOMMAND> _Helper;
 
         /// <param name="configConnectionName">Points to ConnectionString Configuration in section DevToys.PocoDB in App.Config</param>
-        public DbCommandOperation(string configConnectionName) : base(configConnectionName) 
+        public DbCommandOperation(string configConnectionName) : base(configConnectionName)
         { }
 
         /// <param name="config">Use in memory created configuration instead of using App.Config declaration.</param>
-        public DbCommandOperation(ConnectionConfig config) : base(config) 
+        public DbCommandOperation(ConnectionConfig config) : base(config)
         { }
 
         /// <param name="configConnectionName">Points to ConnectionString Configuration in section DevToys.PocoDB in App.Config</param>

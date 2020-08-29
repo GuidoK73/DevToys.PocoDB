@@ -1,7 +1,6 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
- 
+
 [assembly: AssemblyTitle("DevToys.PocoDB.UnitTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 
 namespace PocoDBConsoleAppTest.Data
-{ 
+{
 
     [DBCommand(@"select id, [name], Adress, Country, ZipCode, HouseNumber, CompanyType, Text from dbo.Company where id = @Id", commandtype: CommandType.Text)]
     public class GetCompanyById_Sql
     {
         [DBParameter("Id")]
-        public int Id{ get; set; }
+        public int Id { get; set; }
     }
 
 
@@ -148,7 +148,7 @@ namespace PocoDBConsoleAppTest.Data
         [DBParameter("Id")]
         public int Id { get; set; }
 
-        [DBRandomParameter("Country", Items = new string[] { "Red", "Green", "Blue", "Yellow" } )]
+        [DBRandomParameter("Country", Items = new string[] { "Red", "Green", "Blue", "Yellow" })]
         public string Country { get; set; }
     }
 }

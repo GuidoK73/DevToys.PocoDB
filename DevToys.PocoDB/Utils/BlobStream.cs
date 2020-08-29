@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
- 
+
 // https://stackoverflow.com/questions/2101149/how-to-i-serialize-a-large-graph-of-net-object-into-a-sql-server-blob-without-c
 
 // https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sqlclient-streaming-support

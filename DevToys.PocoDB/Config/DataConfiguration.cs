@@ -2,7 +2,7 @@
 using System.Configuration;
 
 namespace DevToys.PocoDB
-{ 
+{
     public class DataConfiguration
     {
         private static DataConfiguration _Instance;

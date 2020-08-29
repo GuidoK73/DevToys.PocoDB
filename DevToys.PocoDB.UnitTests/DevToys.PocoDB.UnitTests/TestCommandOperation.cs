@@ -4,7 +4,7 @@ using PocoDBConsoleAppTest.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
- 
+
 namespace DevToys.PocoDB.UnitTests
 {
     [TestClass]
@@ -64,7 +64,7 @@ namespace DevToys.PocoDB.UnitTests
                 ZipCode = "4624JC",
                 CompanyType = CompanyType.NV,
                 Text = "Guido Kleijer"
-            }; 
+            };
 
             operation.ExecuteNonQuery(parameters);
 

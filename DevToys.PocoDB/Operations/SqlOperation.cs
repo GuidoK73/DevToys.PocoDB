@@ -3,11 +3,10 @@ using DevToys.PocoDB.Factory;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
 
 namespace DevToys.PocoDB.Operations
-{ 
+{
     /// <summary>
     /// Class for executing sql statements.
     /// </summary>
@@ -215,7 +214,7 @@ namespace DevToys.PocoDB.Operations
         public TRESULTOBJECT ExecuteSingleReader(DbConnection connection, DbTransaction transaction, string commandText) => ExecuteSingleReader(connection, transaction, commandText, null);
 
         public TRESULTOBJECT ExecuteSingleReader(DbConnection connection, DbTransaction transaction, string commandText, params IDbDataParameter[] parameters) => ExecuteReader(connection, transaction, commandText, CommandType.Text, parameters).FirstOrDefault();
-        
+
         #endregion
 
     }

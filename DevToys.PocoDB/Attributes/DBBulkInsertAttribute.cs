@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace DevToys.PocoDB.Attributes
-{ 
+{
     /// <summary>
     /// For bulk insert operations Table name and Schema name are case sensitive!.
     /// </summary>

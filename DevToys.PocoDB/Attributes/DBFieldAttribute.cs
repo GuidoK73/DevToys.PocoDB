@@ -1,11 +1,11 @@
-﻿using System;
+﻿using DevToys.PocoDB.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using DevToys.PocoDB.Enums;
 
 namespace DevToys.PocoDB.Attributes
-{ 
+{
     /// <summary>
     /// Relates a property to a DB field.
     ///
@@ -14,7 +14,7 @@ namespace DevToys.PocoDB.Attributes
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public sealed class DBFieldAttribute : Attribute
-    { 
+    {
         public DBFieldAttribute(string field)
         {
             Field = field;

@@ -1,9 +1,9 @@
 ﻿namespace DevToys.PocoDB.Enums
-{ 
-    internal enum ExecType 
-    { 
-        Scalar = 0, 
-        NonQuery = 1 
+{
+    internal enum ExecType
+    {
+        Scalar = 0,
+        NonQuery = 1
     }
 
     public enum StrictMapping

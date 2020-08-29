@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 
 namespace DevToys.PocoDB.UnitTests
-{ 
+{
     /// <summary>
     /// DynamicSqlOperation allows you to access data without the need of predefined classes 
     /// you just use dynamic object for results and parameter data.
@@ -35,7 +35,7 @@ namespace DevToys.PocoDB.UnitTests
                 ZipCode = "4624JC",
                 Adress = "",
                 CompanyType = CompanyType.GMBH,
-                Text = "Guido Kleijer" 
+                Text = "Guido Kleijer"
             };
 
             operation.ExecuteNonQuery("InsertCompany", parameters, CommandType.StoredProcedure);

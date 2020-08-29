@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using DevToys.PocoDB.Operations;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PocoDBConsoleAppTest.Data;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using DevToys.PocoDB.Operations;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PocoDBConsoleAppTest.Data;
 
 
 namespace DevToys.PocoDB.UnitTests
-{ 
+{
     /// <summary>
     /// SqlOperation is similar to it's result as DBCommandOperation, the difference is the input.
     /// with SqlOperation you do not use DBCommand classes but just sql queries. For correct use it's adviced to use the SqlParameter always.
@@ -28,7 +28,7 @@ namespace DevToys.PocoDB.UnitTests
 
             var _resultMaterialized = _result.ToList();
 
-        } 
+        }
 
         [TestMethod]
         public void SqlSelectOperationSingleReader()
@@ -39,7 +39,7 @@ namespace DevToys.PocoDB.UnitTests
             string sql = "select Id, [name], Adress, Country, ZipCode, HouseNumber, CompanyType from dbo.Company where Id = @Id";
 
             SqlParameter parameter = new SqlParameter() { ParameterName = "Id", Value = 1 };
-            
+
             Company _result = operation.ExecuteSingleReader(sql, parameter);
         }
 

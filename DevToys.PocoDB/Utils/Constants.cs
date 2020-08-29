@@ -1,5 +1,5 @@
 ﻿namespace DevToys.PocoDB
-{ 
+{
     internal class SqlConstants
     {
         public const string NTEXT = "ntext";

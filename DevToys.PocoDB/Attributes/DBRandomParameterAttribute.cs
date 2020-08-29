@@ -3,10 +3,9 @@ using DevToys.PocoDB.RandomData;
 using System;
 using System.Data;
 using System.Reflection;
-using System.Security;
 
 namespace DevToys.PocoDB.Attributes
-{ 
+{
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public sealed class DBRandomParameterAttribute : DBParameterAttribute
     {
@@ -58,7 +57,7 @@ namespace DevToys.PocoDB.Attributes
         }
 
         public override void SetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter)
-        { 
+        {
             // TODO:
             // Use Items when item array matches DataUtils.NetType
 
@@ -66,7 +65,7 @@ namespace DevToys.PocoDB.Attributes
             parameter.ParameterName = Name;
 
             switch (DataUtils.GetNetType(property.PropertyType))
-            {               
+            {
                 case DataUtils.NetType.Enum:
                     if (ItemsIsNetType(DataUtils.NetType.Enum))
                         value = RandomHelper.RandomArrayItem(Items);
@@ -227,7 +226,7 @@ namespace DevToys.PocoDB.Attributes
                 case RandomStringType.BSNNumber:
                     return RandomHelper.RandomBSNNumber();
 
-  
+
             }
 
             return RandomHelper.RandomWord();

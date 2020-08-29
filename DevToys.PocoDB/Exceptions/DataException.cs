@@ -5,7 +5,7 @@ namespace DevToys.PocoDB
 {
     [Serializable]
     public class DataException : Exception
-    { 
+    {
         public DataException() { }
 
         public DataException(string message, params object[] values) : base(string.Format(message, values)) { }
