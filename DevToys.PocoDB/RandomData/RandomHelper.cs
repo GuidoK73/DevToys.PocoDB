@@ -5,10 +5,10 @@ namespace DevToys.PocoDB.RandomData
 {
     internal static class RandomHelper
     {
-        private static char[] _SpecialChars = new char[] { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '{', '}', '[', ']', '?', '!' };
+        private static readonly char[] _SpecialChars = new char[] { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '{', '}', '[', ']', '?', '!' };
 
-        private static int _Seed = DateTime.Now.Millisecond;
-        private static Random Rnd = new Random(_Seed);
+        private static readonly int _Seed = DateTime.Now.Millisecond;
+        private static readonly Random Rnd = new Random(_Seed);
 
         public static string RandomWord() => Words.Items[Rnd.Next(0, Words.Items.Length - 1)];
 

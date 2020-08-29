@@ -9,7 +9,7 @@ namespace DevToys.PocoDB
 {
     internal sealed class DbCommandOperationHelper<TCOMMAND>
     {
-        private ConnectionConfig _Config;
+        private readonly ConnectionConfig _Config;
         private bool _Initialized = false;
         private List<string> _OutputParameters;
 

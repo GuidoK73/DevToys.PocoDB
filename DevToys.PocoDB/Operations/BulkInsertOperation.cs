@@ -18,7 +18,7 @@ namespace DevToys.PocoDB.Operations
     public sealed class BulkInsertOperation<TINSERTOBJECT> : BaseDataOperation
         where TINSERTOBJECT : class, new()
     {
-        private int _Batchsize = 0;
+        private readonly int _Batchsize = 0;
 
         private DBParameterAttribute[] _DbParameters;
 
@@ -26,7 +26,7 @@ namespace DevToys.PocoDB.Operations
 
         private bool _Initialized = false;
         private string[] _Names;
-        private string _TableName;
+        private readonly string _TableName;
 
         /// <summary>
         ///
@@ -42,13 +42,14 @@ namespace DevToys.PocoDB.Operations
             if (bulkinsertattr == null)
                 throw new DataException(string.Format("{0} not defined on {1}.", typeof(DBBulkInsertAttribute).Name, typeof(TINSERTOBJECT).Name));
 
+            _Batchsize = batchsize;
+
             if (_Batchsize < 25)
                 _Batchsize = 25;
 
             if (_Batchsize > 100000)
                 _Batchsize = 100000;
 
-            _Batchsize = batchsize;
             _TableName = bulkinsertattr.TableName;
         }
 
