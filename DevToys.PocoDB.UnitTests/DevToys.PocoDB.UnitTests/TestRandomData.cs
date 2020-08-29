@@ -1,9 +1,6 @@
 ﻿using DevToys.PocoDB.Operations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PocoDBConsoleAppTest.Data;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace DevToys.PocoDB.UnitTests
 { 
@@ -23,7 +20,6 @@ namespace DevToys.PocoDB.UnitTests
                 int newId = parameters.Id;
             }
 
-            
         }
 
         [TestMethod]

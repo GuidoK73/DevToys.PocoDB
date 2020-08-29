@@ -60,7 +60,6 @@
     <Compile Include="Operations\BaseDataOperation.cs" />
     <Compile Include="Operations\BulkInsertOperation.cs" />
     <Compile Include="Operations\DbCommandOperation.cs" />
-    <Compile Include="Operations\ResultObjectCreator.cs" />
     <Compile Include="Operations\DynamicSqlOperation.cs" />
     <Compile Include="Operations\SqlOperation.cs" />
     <Compile Include="RandomData\Collections\Cities.cs" />

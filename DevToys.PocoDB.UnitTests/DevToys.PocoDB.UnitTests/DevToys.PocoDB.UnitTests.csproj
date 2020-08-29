@@ -65,7 +65,6 @@
     <Compile Include="TestCommandOperation.cs" />
     <Compile Include="TestDynamicOperation.cs" />
     <Compile Include="TestRandomData.cs" />
-    <Compile Include="TestResultObjectCreator.cs" />
     <Compile Include="TestSqlOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
