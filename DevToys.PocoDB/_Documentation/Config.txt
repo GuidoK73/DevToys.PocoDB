@@ -32,9 +32,6 @@
         ConnectionString
             Connection String depending on used ConnectionType.
 
-        FieldEncryptionPassword
-            Applies to String and Byte (varchar, nvarchar, binary) for DBField Decrypt needs to be set, for DBParameter Encrypt needs to be set.
-
         NOTES:
         - configSections needs to be declared on top directly after <configuration>
         - Field encryption may affect performance!.
