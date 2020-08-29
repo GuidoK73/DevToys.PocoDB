@@ -35,7 +35,7 @@ namespace DevToys.PocoDB.UnitTests
                 ZipCode = "4624JC",
                 Adress = "",
                 CompanyType = CompanyType.GMBH,
-                EncryptedEncryptedText = "Guido Kleijer" // By Name convention for extend name with 'Encrypted' to mark it as an encrypted field.
+                Text = "Guido Kleijer" 
             };
 
             operation.ExecuteNonQuery("InsertCompany", parameters, CommandType.StoredProcedure);

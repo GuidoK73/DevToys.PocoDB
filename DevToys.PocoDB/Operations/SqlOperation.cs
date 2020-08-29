@@ -133,6 +133,8 @@ namespace DevToys.PocoDB.Operations
 
     /// <summary>
     /// Class for executing sql statements and mapping them to objects.
+    /// 
+    /// Note: Initialization occurs on each first call after object creation, in case of multiple execution declare on class level.
     /// </summary>
     public sealed class SqlOperation<TRESULTOBJECT> : BaseDataOperation<TRESULTOBJECT>
         where TRESULTOBJECT : class, new()

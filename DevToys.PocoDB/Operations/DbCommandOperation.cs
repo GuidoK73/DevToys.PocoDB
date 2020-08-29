@@ -10,6 +10,8 @@ namespace DevToys.PocoDB.Operations
 { 
     /// <summary>
     /// Class for executing NonQuery or Scalar sql statements. Parameters are parsed by DbCommandOperation decorated with DBCommandAttribute and DBParameterAttribute attributes.
+    /// 
+    /// Note: Initialization occurs on each first call after object creation, in case of multiple execution declare on class level.
     /// </summary>
     /// <typeparam name="TCOMMAND">Object defining Procedure Call with or without parameters</typeparam>
     public sealed class DbCommandOperation<TCOMMAND> : BaseDataOperation where TCOMMAND : class
@@ -117,6 +119,8 @@ namespace DevToys.PocoDB.Operations
     /// <summary>
     /// Class for executing Reader or SingleReader procedures. Parameters are parsed by DbCommandOperation decorated with DBCommandAttribute and DBParameterAttribute attributes.
     /// ResultValues are based on TObject decorated with DBTableAttribute and DBFieldAttribute attributes.
+    /// 
+    /// Note: Initialization occurs on each first call after object creation, in case of multiple execution declare on class level.
     /// </summary>
     /// <typeparam name="TRESULTOBJECT">The Result Object Type either as enumarable or single object.</typeparam>
     /// <typeparam name="TCOMMAND">Object defining Procedure Call with or without parameters</typeparam>
