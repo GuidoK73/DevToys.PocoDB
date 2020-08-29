@@ -108,7 +108,7 @@ namespace DevToys.PocoDB.Operations
         {
             IDbDataParameter parameter = new SqlParameter();
             parameter.Direction = attribute.Direction;
-            attribute.SetParameterValue(commandObject, property, parameter, Config.FieldEncryptionPasswordEncrypted);
+            attribute.SetParameterValue(commandObject, property, parameter);
             return parameter;
         }
 

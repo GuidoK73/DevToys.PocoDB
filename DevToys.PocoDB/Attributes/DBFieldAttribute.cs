@@ -6,39 +6,6 @@ using DevToys.PocoDB.Enums;
 
 namespace DevToys.PocoDB.Attributes
 { 
-    public enum ReaderDefaults
-    { 
-        UseDefaultValueProperty = 0,
-
-        /// <summary>DateTime</summary>
-        DateTimeNow = 3,
-
-        /// <summary>DateTime</summary>
-        DateTimeToday = 4,
-
-        /// <summary>TimeSpan</summary>
-        TimeNow = 5,
-
-        /// <summary>TimeSpan: cast null to Now time.</summary>
-        DateTimeUTCNow = 6,
-
-        /// <summary>Int, Double, Float, DateTime etc</summary>
-        MinValue = 7,
-
-        /// <summary>Int, Double, Float, DateTime etc</summary>
-        MaxValue = 8,
-
-        /// <summary> Guid: Cast null to Empty Guid</summary>
-        GuidEmpty = 9,
-
-        /// <summary>Guid: Cast null to new Guid</summary>
-        GuidNew = 10,
-
-        /// <summary> String: Cast null to empty string</summary>
-        StringEmpty = 11
-    }
-
-
     /// <summary>
     /// Relates a property to a DB field.
     ///
@@ -54,12 +21,6 @@ namespace DevToys.PocoDB.Attributes
         }
 
         public string Field { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Indicates whether this data must be Encrypted. (Only works for String and Byte[] properties). 
-        /// WARNING: this can quickly become a performance drain.
-        /// </summary>
-        public bool Decrypt { get; set; } = false;
 
         /// <summary>
         /// Determines default value when object is read from DB and the specific value property is DBNull. (it's not an object creation default!)

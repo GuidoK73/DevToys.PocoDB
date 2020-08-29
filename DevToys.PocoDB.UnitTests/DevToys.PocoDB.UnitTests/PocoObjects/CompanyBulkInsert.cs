@@ -1,4 +1,5 @@
 ﻿using DevToys.PocoDB.Attributes;
+using DevToys.PocoDB.Enums;
 
 namespace PocoDBConsoleAppTest.Data
 { 
@@ -54,7 +55,7 @@ namespace PocoDBConsoleAppTest.Data
 		[DBRandomParameter("CompanyType")] 
 		public CompanyType CompanyType { get; set; } = CompanyType.BV;
 
-		[DBParameter("EncryptedText", Encrypt = true)]
-		public string EncryptedText { get; set; } = string.Empty; // Will drain performance.
+		[DBParameter("Text")]
+		public string Text { get; set; } = string.Empty; // Will drain performance.
 	}
 }

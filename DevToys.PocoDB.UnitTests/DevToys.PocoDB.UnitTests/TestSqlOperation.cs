@@ -65,7 +65,7 @@ namespace DevToys.PocoDB.UnitTests
                new SqlParameter() { ParameterName = "ZipCode", Value = "" },
                new SqlParameter() { ParameterName = "HouseNumber", Value = "" },
                new SqlParameter() { ParameterName = "CompanyType", Value = 1 },
-               operation.CreateEncryptedParameter("EncryptedText", "Guido Kleijer"),
+               new SqlParameter() { ParameterName = "Text", Value = 1 },
                idParameter
             };
 

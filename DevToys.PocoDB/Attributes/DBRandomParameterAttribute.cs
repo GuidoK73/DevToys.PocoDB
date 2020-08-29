@@ -1,4 +1,4 @@
-﻿using DevToys.PocoDB.Encryption;
+﻿using DevToys.PocoDB.Enums;
 using DevToys.PocoDB.RandomData;
 using System;
 using System.Data;
@@ -7,91 +7,6 @@ using System.Security;
 
 namespace DevToys.PocoDB.Attributes
 { 
-    public enum RandomStringType
-    {
-        /// <summary>
-        /// Random Name out of 500 first names
-        /// </summary>
-        FirstName = 0,
-        /// <summary>
-        /// Random Name out of 500 Last names
-        /// </summary>
-        LastName = 1,
-        /// <summary>
-        /// First name + Last name
-        /// </summary>
-        FullName = 2,
-        /// <summary>
-        /// Random word out of 500 words
-        /// </summary>
-        Word = 3,
-        /// <summary>
-        /// A text of random words (number of words limited by Max property)
-        /// </summary>
-        Text = 4,
-        /// <summary>
-        /// Random Company name out of 500 company namrs
-        /// </summary>
-        CompanyName = 5,
-        /// <summary>
-        /// Company name formatted as an URL
-        /// </summary>
-        Url = 6,
-        /// <summary>
-        /// Random Number between Min and Max
-        /// </summary>
-        Number = 7,
-        /// <summary>
-        /// Random Guid
-        /// </summary>
-        Guid = 8,
-        /// <summary>
-        /// @U = Uppercase char @L Lowercase char @N numeric char
-        /// </summary>
-        Format = 9,
-        /// <summary>
-        /// 
-        /// </summary>
-        Password = 10,
-        /// <summary>
-        /// Random Date between DateMin and DateMax
-        /// </summary>
-        DateTime = 11,
-        /// <summary>
-        /// Random Date between DateMin and DateMax, formatted with Format property
-        /// </summary>
-        DateTimeFormatted = 12,
-        /// <summary>
-        /// Random Country name out of 500 names
-        /// </summary>
-        Country = 13,
-        /// <summary>
-        /// Random dutch street name out of 500
-        /// </summary>
-        Street = 14,
-        /// <summary>
-        /// Country,  City, street, housenumber, ZipCode
-        /// </summary>
-        Adress = 15,       
-        /// <summary>
-        /// Random generated zipcode
-        /// </summary>
-        ZipCode = 16,
-        /// <summary>
-        /// Random Color name
-        /// </summary>
-        ColorName = 17,
-        /// <summary>
-        /// Random 11 proof BSN number.
-        /// </summary>
-        BSNNumber = 18,
-        /// <summary>
-        /// Random item out of item array 
-        /// </summary>
-        Item = 19
-
-    }
-
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public sealed class DBRandomParameterAttribute : DBParameterAttribute
     {
@@ -142,7 +57,7 @@ namespace DevToys.PocoDB.Attributes
             return DataUtils.GetNetType(type) == expectedType;
         }
 
-        public override void SetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter, SecureString password)
+        public override void SetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter)
         { 
             // TODO:
             // Use Items when item array matches DataUtils.NetType
@@ -248,7 +163,7 @@ namespace DevToys.PocoDB.Attributes
                     break;
             }
 
-            parameter.Value = FieldEncryption.Encrypt(value, password, Encrypt);
+            parameter.Value = value;
         }
 
         private string RandomString()

@@ -1,8 +1,6 @@
-﻿using DevToys.PocoDB.Encryption;
-using System;
+﻿using System;
 using System.Data;
 using System.Reflection;
-using System.Security;
 
 namespace DevToys.PocoDB.Attributes
 {
@@ -21,11 +19,9 @@ namespace DevToys.PocoDB.Attributes
         /// <summary>
         /// Occurs on Output parameters.
         /// </summary>
-        public virtual void GetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter, SecureString password)
+        public virtual void GetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter)
         {
             object val = parameter.Value;
-
-            val = FieldEncryption.Decrypt(val, password, Encrypt);
 
             if (val != DBNull.Value)
             {
@@ -50,11 +46,11 @@ namespace DevToys.PocoDB.Attributes
         /// <summary>
         /// Occurs on Input and Output parameters.
         /// </summary>
-        public virtual void SetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter, SecureString password)
+        public virtual void SetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter)
         {
             object value = property.GetValue(commandObject);
             parameter.ParameterName = Name;
-            parameter.Value = FieldEncryption.Encrypt(value, password, Encrypt);
+            parameter.Value = value;
         }
     }
 }

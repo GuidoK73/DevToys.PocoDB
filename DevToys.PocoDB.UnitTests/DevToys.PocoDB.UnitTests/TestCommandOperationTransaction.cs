@@ -32,7 +32,7 @@ namespace DevToys.PocoDB.UnitTests
                     {
                         InsertCompanyByProcedure insert1 = new InsertCompanyByProcedure()
                         {
-                            Adress = "", Country = "NLD",  HouseNumber = "", Name = "A Company Name",   ZipCode = "4624JC",  CompanyType = CompanyType.NV, EncryptedText = "Guido Kleijer2"
+                            Adress = "", Country = "NLD",  HouseNumber = "", Name = "A Company Name",   ZipCode = "4624JC",  CompanyType = CompanyType.NV, Text = "Guido Kleijer2"
                         };
 
                         operation1.ExecuteNonQuery(connection, transaction, insert1);
@@ -42,7 +42,7 @@ namespace DevToys.PocoDB.UnitTests
                         // Too large ZipCode
                         InsertCompanyBySqlStatement insert2 = new InsertCompanyBySqlStatement()
                         {
-                            Adress = "", Country = "NLD", HouseNumber = "", Name = "A Company Name ",ZipCode = "4624JC TO LONG AAAAAAAAAAAbbbbbbbbbbbAAAAAAAAA TO LONG", CompanyType = CompanyType.NV, EncryptedText = "Guido Kleijer"
+                            Adress = "", Country = "NLD", HouseNumber = "", Name = "A Company Name ",ZipCode = "4624JC TO LONG AAAAAAAAAAAbbbbbbbbbbbAAAAAAAAA TO LONG", CompanyType = CompanyType.NV, Text = "Guido Kleijer"
                         };
 
                         operation2.ExecuteNonQuery(connection, transaction, insert2);

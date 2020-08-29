@@ -1,5 +1,4 @@
-﻿using DevToys.PocoDB.Encryption;
-using System;
+﻿using System;
 using System.Collections;
 using System.Data;
 using System.Reflection;
@@ -7,7 +6,7 @@ using System.Security;
 using System.Text;
 
 namespace DevToys.PocoDB.Attributes
-{ 
+{
     /// <summary>
     /// Translates to: System.Data.IDbDataParameter.
     /// Use this attribute if you want to map an array/collection property to a procedure parameter accepting a comma seperated string.
@@ -17,9 +16,14 @@ namespace DevToys.PocoDB.Attributes
     public sealed class DBStringArrayParameterAttribute : DBParameterAttribute
     {
         /// <param name="name">DbParameter Name</param>
-        public DBStringArrayParameterAttribute(string name) : base(name) {  }
+        public DBStringArrayParameterAttribute(string name) : base(name) { }
 
-        public override void SetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter, SecureString password)
+        public override void GetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter)
+        {
+            throw new DataException($"Output parameters not supported for '{nameof(DBStringArrayParameterAttribute)}'.");
+        }
+
+        public override void SetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter)
         {
             object _value = property.GetValue(commandObject);
             string _valuestring = null;
@@ -45,12 +49,6 @@ namespace DevToys.PocoDB.Attributes
                 parameter.Value = DBNull.Value;
             else
                 parameter.Value = _valuestring;
-        }
-         
-
-        public override void GetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter, SecureString password)
-        {
-            throw new DataException($"Output parameters not supported for '{nameof(DBStringArrayParameterAttribute)}'.");
         }
     }
 }

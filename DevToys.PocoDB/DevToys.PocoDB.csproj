@@ -53,7 +53,6 @@
     <Compile Include="Config\ConnectionCollection.cs" />
     <Compile Include="Config\ConnectionConfig.cs" />
     <Compile Include="Config\ConnectionConfigurationSection.cs" />
-    <Compile Include="Encryption\FieldEncryption.cs" />
     <Compile Include="EventArgs\BulkInsertEventArgs.cs" />
     <Compile Include="EventArgs\DataOperationPreExecute.cs" />
     <Compile Include="Exceptions\DataException.cs" />
@@ -64,7 +63,6 @@
     <Compile Include="Operations\ResultObjectCreator.cs" />
     <Compile Include="Operations\DynamicSqlOperation.cs" />
     <Compile Include="Operations\SqlOperation.cs" />
-    <Compile Include="Encryption\StringCipher.cs" />
     <Compile Include="RandomData\Collections\Cities.cs" />
     <Compile Include="RandomData\Collections\Colors.cs" />
     <Compile Include="RandomData\Collections\Countries.cs" />

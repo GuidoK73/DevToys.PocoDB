@@ -1,8 +1,5 @@
-﻿using DevToys.PocoDB.Encryption;
-using DevToys.PocoDB.Enums;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Globalization;
-using System.Security;
 
 namespace DevToys.PocoDB
 { 
@@ -34,33 +31,6 @@ namespace DevToys.PocoDB
             get { return (string)this["ConnectionString"]; }
             set { this["ConnectionString"] = value; }
         }
-
-
-        [ConfigurationProperty("FieldEncryptionPassword", DefaultValue = "", IsRequired = true, IsKey = false)]
-        private string FieldEncryptionPassword
-        {
-            get 
-            { 
-                return this["FieldEncryptionPassword"].ToString(); 
-            }
-            set 
-            { 
-                this["FieldEncryptionPassword"] = value; 
-            }
-        }
-
-        public SecureString FieldEncryptionPasswordEncrypted
-        {
-            get
-            {
-                return StringCipher.ToSecureString(FieldEncryptionPassword);
-            }
-            set
-            {
-                FieldEncryptionPassword = new string(StringCipher.SecureStringChars(value));
-            }
-        }
-
 
         /// <summary>
         /// Determines whether the property type should match the Reader's field type (C# type), when false properties will be converted to the target type.

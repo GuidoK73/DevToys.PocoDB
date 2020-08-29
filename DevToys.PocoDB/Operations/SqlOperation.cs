@@ -1,5 +1,4 @@
-﻿using DevToys.PocoDB.Encryption;
-using DevToys.PocoDB.Enums;
+﻿using DevToys.PocoDB.Enums;
 using DevToys.PocoDB.Factory;
 using System.Collections.Generic;
 using System.Data;
@@ -25,14 +24,6 @@ namespace DevToys.PocoDB.Operations
         /// <param name="configConnectionName">Points to ConnectionString Configuration in section DevToys.PocoDB in App.Config</param>
         public SqlOperation(DbConnectionStringBuilder connectionString, string configConnectionName) : base(connectionString, configConnectionName)
         { }
-
-        public SqlParameter CreateEncryptedParameter(string name, object value)
-        {
-            object newvalue = FieldEncryption.Encrypt(value, Config.FieldEncryptionPasswordEncrypted, true);
-            return new SqlParameter() { ParameterName = name, Value = newvalue };
-        }
-        
-        public object DecryptValue(object value) => FieldEncryption.Decrypt(value, Config.FieldEncryptionPasswordEncrypted, true);
 
         #region Non Transaction
 
@@ -153,14 +144,6 @@ namespace DevToys.PocoDB.Operations
         /// <param name="connectionTypeName">Points to ConnectionString Configuration in section DevToys.PocoDB in App.Config</param>
         public SqlOperation(DbConnectionStringBuilder connectionString, string connectionTypeName) : base(connectionString, connectionTypeName)
         { }
-
-        public SqlParameter CreateEncryptedParameter(string name, object value)
-        {
-            object newvalue = FieldEncryption.Encrypt(value, Config.FieldEncryptionPasswordEncrypted, true);
-            return new SqlParameter() { ParameterName = name, Value = newvalue };
-        }
-
-        public object DecryptValue(object value) => FieldEncryption.Decrypt(value, Config.FieldEncryptionPasswordEncrypted, true);
 
         #region Non Transactional
 

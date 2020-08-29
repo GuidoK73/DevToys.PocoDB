@@ -41,7 +41,7 @@ namespace DevToys.PocoDB.UnitTests
                 Name = "A Company Name",
                 ZipCode = "4624JC",
                 CompanyType = CompanyType.NV,
-                EncryptedText = "Guido Kleijer2"
+                Text = "Guido Kleijer2"
             };
 
             operation.ExecuteNonQuery(parameters);
@@ -63,7 +63,7 @@ namespace DevToys.PocoDB.UnitTests
                 Name = "A Company Name",
                 ZipCode = "4624JC",
                 CompanyType = CompanyType.NV,
-                EncryptedText = "Guido Kleijer"
+                Text = "Guido Kleijer"
             }; 
 
             operation.ExecuteNonQuery(parameters);

@@ -33,7 +33,7 @@ namespace PocoDBConsoleAppTest.Data
 		[DBField("CompanyType")]
 		public CompanyType CompanyType { get; set; }
 
-		[DBField("EncryptedText", Decrypt = true)]
-		public string EncryptedText { get; set; }
+		[DBField("Text")]
+		public string Text { get; set; }
 	}
 }

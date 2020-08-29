@@ -5,7 +5,7 @@ using System.Data;
 namespace PocoDBConsoleAppTest.Data
 { 
 
-    [DBCommand(@"select id, [name], Adress, Country, ZipCode, HouseNumber, CompanyType, EncryptedText from dbo.Company where id = @Id", commandtype: CommandType.Text)]
+    [DBCommand(@"select id, [name], Adress, Country, ZipCode, HouseNumber, CompanyType, Text from dbo.Company where id = @Id", commandtype: CommandType.Text)]
     public class GetCompanyById_Sql
     {
         [DBParameter("Id")]
@@ -13,7 +13,7 @@ namespace PocoDBConsoleAppTest.Data
     }
 
 
-    [DBCommand(@"select id, [name], Adress, Country, ZipCode, HouseNumber, CompanyType, EncryptedText from dbo.Company", commandtype: CommandType.Text)]
+    [DBCommand(@"select id, [name], Adress, Country, ZipCode, HouseNumber, CompanyType, Text from dbo.Company", commandtype: CommandType.Text)]
     public class GetCompanyAll
     { }
 
@@ -70,14 +70,14 @@ namespace PocoDBConsoleAppTest.Data
         [DBParameter("CompanyType")]
         public CompanyType CompanyType { get; set; }  // Enums translates to sql int.
 
-        [DBParameter("EncryptedText", Encrypt = true)]
-        public string EncryptedText { get; set; }
+        [DBParameter("Text")]
+        public string Text { get; set; }
     }
 
 
 
-    [DBCommand(@"insert into dbo.Company ([name], Adress, Country, ZipCode, HouseNumber, CompanyType, EncryptedText) 
-                    values (@name, @Adress, @Country, @ZipCode, @HouseNumber, @CompanyType, @EncryptedText);
+    [DBCommand(@"insert into dbo.Company ([name], Adress, Country, ZipCode, HouseNumber, CompanyType, Text) 
+                    values (@name, @Adress, @Country, @ZipCode, @HouseNumber, @CompanyType, @Text);
 	                set @OutputId = @@IDENTITY
 ", commandtype: CommandType.Text)]
     public class InsertCompanyBySqlStatement
@@ -103,14 +103,14 @@ namespace PocoDBConsoleAppTest.Data
         [DBParameter("CompanyType")]
         public CompanyType CompanyType { get; set; }  // Enums translates to sql int.
 
-        [DBParameter("EncryptedText", Encrypt = true)]
-        public string EncryptedText { get; set; }
+        [DBParameter("Text")]
+        public string Text { get; set; }
     }
 
 
 
-    [DBCommand(@"insert into dbo.Company ([name], Adress, Country, ZipCode, HouseNumber, CompanyType, EncryptedText) 
-                    values (@name, @Adress, @Country, @ZipCode, @HouseNumber, @CompanyType, @EncryptedText);
+    [DBCommand(@"insert into dbo.Company ([name], Adress, Country, ZipCode, HouseNumber, CompanyType, Text) 
+                    values (@name, @Adress, @Country, @ZipCode, @HouseNumber, @CompanyType, @Text);
 	             set @OutputId = @@IDENTITY 
 ", commandtype: CommandType.Text)]
     public class InsertCompanyRandom
@@ -136,8 +136,8 @@ namespace PocoDBConsoleAppTest.Data
         [DBParameter("CompanyType")]
         public CompanyType CompanyType { get; set; } = CompanyType.BV;
 
-        [DBRandomParameter("EncryptedText", Encrypt = true)]
-        public string EncryptedText { get; set; }
+        [DBRandomParameter("Text")]
+        public string Text { get; set; }
     }
 
 

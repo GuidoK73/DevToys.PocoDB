@@ -13,12 +13,10 @@ namespace DevToys.PocoDB
         private ConnectionConfig _Config;
         private bool _Initialized = false;
         private List<string> _OutputParameters;
-        private SecureString _Password;
 
         public DbCommandOperationHelper(ConnectionConfig config)
         {
             _Config = config;
-            _Password = _Config.FieldEncryptionPasswordEncrypted;
         }
 
         public Dictionary<string, DBParameterAttribute> Attributes { get; private set; }
@@ -37,7 +35,7 @@ namespace DevToys.PocoDB
                 if (!DataUtils.IsSimpleType(_property.PropertyType) || _property.PropertyType.IsEnum)
                     throw new DataException("Output parameter property {0} must be a simple type", _property.Name);
 
-                _attribute.GetParameterValue<TCOMMAND>(commandObject, _property, _parameter, _Password);
+                _attribute.GetParameterValue<TCOMMAND>(commandObject, _property, _parameter);
             }
         }
 
@@ -60,7 +58,7 @@ namespace DevToys.PocoDB
 
                 IDbDataParameter parameter = command.CreateParameter();
                 parameter.Direction = attribute.Direction;
-                attribute.SetParameterValue<TCOMMAND>(commandObject, property, parameter, _Password);
+                attribute.SetParameterValue<TCOMMAND>(commandObject, property, parameter);
                 command.Parameters.Add(parameter);
             }
         }

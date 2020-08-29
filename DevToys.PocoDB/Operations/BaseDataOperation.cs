@@ -1,5 +1,4 @@
 ﻿using DevToys.PocoDB.Attributes;
-using DevToys.PocoDB.Encryption;
 using DevToys.PocoDB.Enums;
 using DevToys.PocoDB.Factory;
 using System;
@@ -73,7 +72,7 @@ namespace DevToys.PocoDB.Operations
             {
                 var _attribute = _Attributes[ii];
                 var _property = _Properties[ii];
-                SetPropertyValue(_property, _result, reader[ii], _attribute.ReaderDefaultValue, _attribute.StrictMapping, _attribute.Decrypt);
+                SetPropertyValue(_property, _result, reader[ii], _attribute.ReaderDefaultValue, _attribute.StrictMapping);
             }
 
             return _result;
@@ -123,10 +122,8 @@ namespace DevToys.PocoDB.Operations
             }
         }
 
-        private void SetPropertyValue(PropertyInfo propertyInfo, TRESULTOBJECT dataobject, object value, object defaultvalue, StrictMapping strictField, bool fieldDecrypt)
+        private void SetPropertyValue(PropertyInfo propertyInfo, TRESULTOBJECT dataobject, object value, object defaultvalue, StrictMapping strictField)
         {
-            value = FieldEncryption.Decrypt(value, Config.FieldEncryptionPasswordEncrypted, fieldDecrypt);
-
             if (value.GetType() == typeof(DBNull))
             {
                 if (propertyInfo.PropertyType != typeof(string))
