@@ -197,6 +197,7 @@ namespace DevToys.PocoDB.Operations
 
                 command.CommandText = commandText;
                 command.CommandType = commandType;
+                command.Transaction = transaction;
 
                 RaisePreExecute(connection, command);
 

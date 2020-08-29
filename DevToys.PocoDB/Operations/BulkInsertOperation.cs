@@ -106,8 +106,7 @@ namespace DevToys.PocoDB.Operations
 
         private IDbDataParameter GetParameter(TINSERTOBJECT commandObject, DBParameterAttribute attribute, PropertyInfo property)
         {
-            IDbDataParameter parameter = new SqlParameter();
-            parameter.Direction = attribute.Direction;
+            IDbDataParameter parameter = new SqlParameter { Direction = attribute.Direction };
             attribute.SetParameterValue(commandObject, property, parameter);
             return parameter;
         }
