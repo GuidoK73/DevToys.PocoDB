@@ -79,7 +79,6 @@
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\DataUtils.cs" />
     <Compile Include="Operations\DbCommandOperationHelper.cs" />
-    <Content Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="_Documentation\Read me.txt" />

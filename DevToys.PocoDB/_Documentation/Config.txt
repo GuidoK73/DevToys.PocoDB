@@ -8,10 +8,8 @@
     <Connections>
       <add  Name="Local" 
             ConnectionType="SqlClient" 
-
             StrictMapping="true" 
             Culture="" 
-            FieldEncryptionPassword=""
             ConnectionString="Server=LAPTOP-GUIDO\SQLEXPRESS;Database=Misc;Trusted_Connection=True;" />
       
 <!-- 
