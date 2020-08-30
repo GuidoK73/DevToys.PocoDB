@@ -30,17 +30,23 @@ namespace DevToys.PocoDB.Operations
         public DbCommandOperation(DbConnectionStringBuilder connectionString, string configConnectionName) : base(connectionString, configConnectionName)
         { }
 
+        /// <summary>
+        /// When CommandOperation does not have any parameters
+        /// </summary>
         public void ExecuteNonQuery()
         {
-            Type _t = typeof(TCOMMAND);
-            TCOMMAND _parameters = (TCOMMAND)Activator.CreateInstance(_t);
+            Type _type = typeof(TCOMMAND);
+            TCOMMAND _parameters = (TCOMMAND)Activator.CreateInstance(_type);
             ExecuteNonQuery(_parameters);
         }
 
+        /// <summary>
+        /// When CommandOperation does not have any parameters
+        /// </summary>
         public void ExecuteNonQuery(DbConnection connection, DbTransaction transaction)
         {
-            Type _t = typeof(TCOMMAND);
-            TCOMMAND _parameters = (TCOMMAND)Activator.CreateInstance(_t);
+            Type _type = typeof(TCOMMAND);
+            TCOMMAND _parameters = (TCOMMAND)Activator.CreateInstance(_type);
             ExecuteNonQuery(connection, transaction, _parameters);
         }
 

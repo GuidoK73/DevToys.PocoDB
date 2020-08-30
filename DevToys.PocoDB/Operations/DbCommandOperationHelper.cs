@@ -27,9 +27,9 @@ namespace DevToys.PocoDB
         {
             foreach (int index in _OutputParameters)
             {
-                DBParameterAttribute _attribute = _Attributes[index];
-                PropertyInfo _property = _Properties[index];
-                DbParameter _parameter = command.Parameters[_attribute.Name];
+                var _attribute = _Attributes[index];
+                var _property = _Properties[index];
+                var _parameter = command.Parameters[_attribute.Name];
 
                 if (!DataUtils.IsSimpleType(_property.PropertyType) || _property.PropertyType.IsEnum)
                     throw new DataException("Output parameter property {0} must be a simple type", _property.Name);
@@ -52,13 +52,12 @@ namespace DevToys.PocoDB
         {
             for (int index = 0; index < _Properties.Count(); index++)
             {
-                var attribute = _Attributes[index];
-                var property = _Properties[index];
-
-                IDbDataParameter parameter = command.CreateParameter();
-                parameter.Direction = attribute.Direction;
-                attribute.SetParameterValue<TCOMMAND>(commandObject, property, parameter);
-                command.Parameters.Add(parameter);
+                var _attribute = _Attributes[index];
+                var _property = _Properties[index];
+                var _parameter = command.CreateParameter();
+                _parameter.Direction = _attribute.Direction;
+                _attribute.SetParameterValue<TCOMMAND>(commandObject, _property, _parameter);
+                command.Parameters.Add(_parameter);
             }
         }
 

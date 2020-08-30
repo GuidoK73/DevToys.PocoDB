@@ -29,10 +29,10 @@ namespace DevToys.PocoDB.Attributes
             bool _isenumerable = (_value.GetType().GetInterface(nameof(IEnumerable)) != null);
             if (_isenumerable)
             {
-                IEnumerable values = _value as IEnumerable;
+                IEnumerable _values = _value as IEnumerable;
 
                 StringBuilder _sb = new StringBuilder();
-                foreach (var val in values)
+                foreach (var val in _values)
                 {
                     _sb.Append(val);
                     _sb.Append(",");

@@ -61,44 +61,44 @@ namespace DevToys.PocoDB.Attributes
             // TODO:
             // Use Items when item array matches DataUtils.NetType
 
-            object value = property.GetValue(commandObject);
+            object _value = property.GetValue(commandObject);
             parameter.ParameterName = Name;
 
             switch (DataUtils.GetNetType(property.PropertyType))
             {
                 case DataUtils.NetType.Enum:
                     if (ItemsIsNetType(DataUtils.NetType.Enum))
-                        value = RandomHelper.RandomArrayItem(Items);
+                        _value = RandomHelper.RandomArrayItem(Items);
                     else
-                        value = RandomHelper.RandomEnum(property.PropertyType);
+                        _value = RandomHelper.RandomEnum(property.PropertyType);
                     break;
 
                 case DataUtils.NetType.String:
                     if (ItemsIsNetType(DataUtils.NetType.String))
-                        value = (String)RandomHelper.RandomArrayItem(Items);
+                        _value = (String)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = RandomString();
+                        _value = RandomString();
                     break;
 
                 case DataUtils.NetType.Guid:
                     if (ItemsIsNetType(DataUtils.NetType.Guid))
-                        value = (Guid)RandomHelper.RandomArrayItem(Items);
+                        _value = (Guid)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = Guid.NewGuid();
+                        _value = Guid.NewGuid();
                     break;
 
                 case DataUtils.NetType.Boolean:
                     if (ItemsIsNetType(DataUtils.NetType.Boolean))
-                        value = (bool)RandomHelper.RandomArrayItem(Items);
+                        _value = (bool)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = RandomHelper.RandomNumber(1, 2) == 1;
+                        _value = RandomHelper.RandomNumber(1, 2) == 1;
                     break;
 
                 case DataUtils.NetType.DateTime:
                     if (ItemsIsNetType(DataUtils.NetType.DateTime))
-                        value = (DateTime)RandomHelper.RandomArrayItem(Items);
+                        _value = (DateTime)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = RandomHelper.RandomDateTime(DateMin, DateMax);
+                        _value = RandomHelper.RandomDateTime(DateMin, DateMax);
                     break;
 
                 case DataUtils.NetType.DateTimeOffset:
@@ -107,62 +107,62 @@ namespace DevToys.PocoDB.Attributes
 
                 case DataUtils.NetType.Byte:
                     if (ItemsIsNetType(DataUtils.NetType.Byte))
-                        value = (Byte)RandomHelper.RandomArrayItem(Items);
+                        _value = (Byte)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = (Byte)RandomHelper.RandomDouble((double)Min, (double)Max);
+                        _value = (Byte)RandomHelper.RandomDouble((double)Min, (double)Max);
                     break;
 
                 case DataUtils.NetType.SByte:
                     if (ItemsIsNetType(DataUtils.NetType.SByte))
-                        value = (SByte)RandomHelper.RandomArrayItem(Items);
+                        _value = (SByte)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = (SByte)RandomHelper.RandomDouble((double)Min, (double)Max);
+                        _value = (SByte)RandomHelper.RandomDouble((double)Min, (double)Max);
                     break;
 
                 case DataUtils.NetType.Int16:
                     if (ItemsIsNetType(DataUtils.NetType.Int16))
-                        value = (Int16)RandomHelper.RandomArrayItem(Items);
+                        _value = (Int16)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = (Int16)RandomHelper.RandomDouble((double)Min, (double)Max);
+                        _value = (Int16)RandomHelper.RandomDouble((double)Min, (double)Max);
                     break;
 
                 case DataUtils.NetType.Int32:
                     if (ItemsIsNetType(DataUtils.NetType.Int32))
-                        value = (Int32)RandomHelper.RandomArrayItem(Items);
+                        _value = (Int32)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = RandomHelper.RandomNumber(Min, Max);
+                        _value = RandomHelper.RandomNumber(Min, Max);
                     break;
 
                 case DataUtils.NetType.Int64:
                     if (ItemsIsNetType(DataUtils.NetType.Int64))
-                        value = (Int64)RandomHelper.RandomArrayItem(Items);
+                        _value = (Int64)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = (Int64)RandomHelper.RandomDouble((double)Min, (double)Max);
+                        _value = (Int64)RandomHelper.RandomDouble((double)Min, (double)Max);
                     break;
 
                 case DataUtils.NetType.Single:
                     if (ItemsIsNetType(DataUtils.NetType.Single))
-                        value = (Single)RandomHelper.RandomArrayItem(Items);
+                        _value = (Single)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = (Single)RandomHelper.RandomDouble((double)Min, (double)Max);
+                        _value = (Single)RandomHelper.RandomDouble((double)Min, (double)Max);
                     break;
 
                 case DataUtils.NetType.Decimal:
                     if (ItemsIsNetType(DataUtils.NetType.Decimal))
-                        value = (Decimal)RandomHelper.RandomArrayItem(Items);
+                        _value = (Decimal)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = (decimal)RandomHelper.RandomDouble((double)Min, (double)Max);
+                        _value = (decimal)RandomHelper.RandomDouble((double)Min, (double)Max);
                     break;
 
                 case DataUtils.NetType.Double:
                     if (ItemsIsNetType(DataUtils.NetType.Double))
-                        value = (Double)RandomHelper.RandomArrayItem(Items);
+                        _value = (Double)RandomHelper.RandomArrayItem(Items);
                     else
-                        value = (double)RandomHelper.RandomDouble((double)Min, (double)Max);
+                        _value = (double)RandomHelper.RandomDouble((double)Min, (double)Max);
                     break;
             }
 
-            parameter.Value = value;
+            parameter.Value = _value;
         }
 
         private string RandomString()

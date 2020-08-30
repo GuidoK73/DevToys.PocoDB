@@ -78,7 +78,7 @@ namespace DevToys.PocoDB.Operations
                 _table.Columns.Add(column);
             }
 
-            int ii = 0;
+            int _rowCounter = 0;
 
             foreach (TINSERTOBJECT item in data)
             {
@@ -93,13 +93,13 @@ namespace DevToys.PocoDB.Operations
 
                 _table.Rows.Add(row);
 
-                if (ii % _Batchsize == 0 && ii > 0)
+                if (_rowCounter % _Batchsize == 0 && _rowCounter > 0)
                 {
                     Insert(_table);
                     _table.Rows.Clear();
-                    Progress(this, new BulkInsertEventArgs() { RowsProcessed = ii });
+                    Progress(this, new BulkInsertEventArgs() { RowsProcessed = _rowCounter });
                 }
-                ii++;
+                _rowCounter++;
             }
             if (_table.Rows.Count > 0)
                 Insert(_table);

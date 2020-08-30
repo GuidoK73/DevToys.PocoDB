@@ -21,14 +21,14 @@ namespace DevToys.PocoDB.Attributes
         /// </summary>
         public virtual void GetParameterValue<TCOMMAND>(TCOMMAND commandObject, PropertyInfo property, IDbDataParameter parameter)
         {
-            object val = parameter.Value;
+            object _val = parameter.Value;
 
-            if (val != DBNull.Value)
+            if (_val != DBNull.Value)
             {
                 if (property.PropertyType.IsEnum)
-                    property.SetValue(commandObject, Enum.Parse(property.PropertyType, val.ToString()), null);
+                    property.SetValue(commandObject, Enum.Parse(property.PropertyType, _val.ToString()), null);
                 else
-                    property.SetValue(commandObject, val);
+                    property.SetValue(commandObject, _val);
             }
             else
             {
@@ -37,7 +37,7 @@ namespace DevToys.PocoDB.Attributes
                         throw new DataException("Output parameter property {0} cannot contain null value", property.Name);
 
                 if (property.PropertyType.IsEnum)
-                    property.SetValue(commandObject, Enum.Parse(property.PropertyType, val.ToString()), null);
+                    property.SetValue(commandObject, Enum.Parse(property.PropertyType, _val.ToString()), null);
                 else
                     property.SetValue(commandObject, null);
             }

@@ -42,9 +42,6 @@ namespace DevToys.PocoDB.Operations
     {
         private DBFieldAttribute[] _Attributes;
         private bool _Initialized = false;
-
-        //private Dictionary<string, DBFieldAttribute> _Attributes = new Dictionary<string, DBFieldAttribute>();
-        //private Dictionary<string, PropertyInfo> _Properties = new Dictionary<string, PropertyInfo>();
         private PropertyInfo[] _Properties;
 
         /// <param name="configConnectionName">Reference to connection in DevToys.PocoDB config section</param>
