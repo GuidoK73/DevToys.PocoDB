@@ -1,16 +1,10 @@
 ﻿using DevToys.PocoDB.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace DevToys.PocoDB.Attributes
 {
     /// <summary>
     /// Relates a property to a DB field.
-    ///
-    /// this Attribute is Used by DataOperation<TObject> Read methods.
-    /// it will map the datatable fields to the corresponding values.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public sealed class DBFieldAttribute : Attribute
