@@ -15,6 +15,6 @@ namespace DevToys.PocoDB.Attributes
 
         public string TableName { get; private set; }
 
-        public override string ToString() => $"[{TableName}]";
+        public override string ToString() => TableName;
     }
 }
