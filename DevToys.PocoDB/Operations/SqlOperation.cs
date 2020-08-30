@@ -155,10 +155,12 @@ namespace DevToys.PocoDB.Operations
             using (DbConnection connection = ConnectionFactory.Instance.Create(Config.ConnectionType, Config.ConnectionString))
             {
                 connection.Open();
-                var _resultSet = ExecuteReader(connection, null, commandObject);
-                foreach (TRESULTOBJECT result in _resultSet)
-                    yield return result;
-
+                using (DbCommand command = connection.CreateCommand())
+                {
+                    var _resultSet = ExecuteReader(connection, null, commandText, commandType, parameters);
+                    foreach (TRESULTOBJECT result in _resultSet)
+                        yield return result;
+                }
                 connection.Close();
             }
         }
