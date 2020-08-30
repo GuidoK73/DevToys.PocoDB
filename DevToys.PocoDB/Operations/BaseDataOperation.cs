@@ -27,10 +27,7 @@ namespace DevToys.PocoDB.Operations
 
         protected ConnectionConfig Config { get; private set; }
 
-        public DbConnection CreateConnection()
-        {
-            return ConnectionFactory.Instance.Create(Config.ConnectionType, Config.ConnectionString);
-        }
+        public DbConnection CreateConnection() => ConnectionFactory.Instance.Create(Config.ConnectionType, Config.ConnectionString);
 
         /// <summary>Call before invoking command.Execute etc. </summary>
         protected void RaisePreExecute(DbConnection connection, DbCommand command) => PreExecute?.Invoke(this, new DataOperationPreExecute() { Connection = connection, Command = command });
