@@ -7,12 +7,28 @@ namespace DevToys.PocoDB
     {
         public ConnectionConfig() { }
 
+
+        private string _Name = null;
+
         [ConfigurationProperty("Name", DefaultValue = "", IsRequired = true, IsKey = true)]
         public string Name
         {
-            get { return (string)this["Name"]; }
-            set { this["Name"] = value; }
+            get 
+            { 
+                if (string.IsNullOrEmpty(_Name))
+                    _Name = (string)this["Name"];
+
+                return _Name;
+            }
+            set 
+            {
+                _Name = value;
+                this["Name"] = value; 
+            }
         }
+
+
+        private string _ConnectionType = null;
 
         /// <summary>
         /// DataProvider to use, three types are registered SqlClient(SqlConnection), Odbc(OdbcConnection), OleDb(OleDbConnection).
@@ -21,16 +37,41 @@ namespace DevToys.PocoDB
         [ConfigurationProperty("ConnectionType", DefaultValue = Factory.ConnectionFactoryDefaultTypes.SqlClient, IsRequired = true, IsKey = false)]
         public string ConnectionType
         {
-            get { return (string)this["ConnectionType"]; }
-            set { this["ConnectionType"] = value; }
+            get 
+            { 
+                if (string.IsNullOrEmpty(_ConnectionType))
+                    _ConnectionType = (string)this["ConnectionType"];
+
+                return _ConnectionType;
+            }
+            set 
+            {
+                _ConnectionType = value;
+                this["ConnectionType"] = value; 
+            }
         }
+
+        private string _ConnectionString = null;
+
 
         [ConfigurationProperty("ConnectionString", DefaultValue = "", IsRequired = true, IsKey = false)]
         public string ConnectionString
         {
-            get { return (string)this["ConnectionString"]; }
-            set { this["ConnectionString"] = value; }
+            get 
+            { 
+                if (string.IsNullOrEmpty(_ConnectionString))
+                    _ConnectionString = (string)this["ConnectionString"];
+
+                return _ConnectionString;
+            }
+            set 
+            {
+                _ConnectionString = value;
+                this["ConnectionString"] = value; 
+            }
         }
+
+        private bool? _StrictMapping = null;
 
         /// <summary>
         /// Determines whether the property type should match the Reader's field type (C# type), when false properties will be converted to the target type.
@@ -38,8 +79,19 @@ namespace DevToys.PocoDB
         [ConfigurationProperty("StrictMapping", DefaultValue = true, IsRequired = true, IsKey = false)]
         public bool StrictMapping
         {
-            get { return (bool)this["StrictMapping"]; }
-            set { this["StrictMapping"] = value; }
+            get 
+            {
+                if (!_StrictMapping.HasValue)
+                    _StrictMapping = (bool)this["StrictMapping"];
+
+                return _StrictMapping.Value; 
+            
+            }
+            set 
+            {
+                _StrictMapping = value;
+                this["StrictMapping"] = value; 
+            }
         }
 
 

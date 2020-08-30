@@ -225,8 +225,6 @@ namespace DevToys.PocoDB.Attributes
 
                 case RandomStringType.BSNNumber:
                     return RandomHelper.RandomBSNNumber();
-
-
             }
 
             return RandomHelper.RandomWord();

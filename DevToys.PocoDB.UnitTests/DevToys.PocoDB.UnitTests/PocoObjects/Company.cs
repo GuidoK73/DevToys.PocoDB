@@ -35,5 +35,7 @@ namespace PocoDBConsoleAppTest.Data
 
         [DBField("Text")]
         public string Text { get; set; }
+
+        public override string ToString() => Name;
     }
 }

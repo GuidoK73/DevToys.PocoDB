@@ -4,7 +4,9 @@ namespace DevToys.PocoDB
 {
     public class ConnectionCollection : ConfigurationElementCollection
     {
-        public ConnectionCollection() { }
+        public ConnectionCollection() 
+        { 
+        }
 
         public ConnectionConfig this[int index]
         {
