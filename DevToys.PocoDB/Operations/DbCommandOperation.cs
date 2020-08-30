@@ -201,7 +201,7 @@ namespace DevToys.PocoDB.Operations
                 while (_reader.Read())
                 {
                     TRESULTOBJECT _dataobject = ReadDataRow(_reader);
-                    yield return _dataobject; // returns only when requested by ienumerable.
+                    yield return _dataobject; 
                 }
             }
         }
