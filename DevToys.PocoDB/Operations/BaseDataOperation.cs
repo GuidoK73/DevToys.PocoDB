@@ -66,13 +66,14 @@ namespace DevToys.PocoDB.Operations
             Init(reader);
 
             // Create new object
-            TRESULTOBJECT _result = new TRESULTOBJECT();
+            var _result = new TRESULTOBJECT();
             // create a new base object so we can invoke base methods.
-            for (int ii = 0; ii < reader.FieldCount; ii++)
+            for (int index = 0; index < reader.FieldCount; index++)
             {
-                var _attribute = _Attributes[ii];
-                var _property = _Properties[ii];
-                SetPropertyValue(_property, _result, reader[ii], _attribute.ReaderDefaultValue, _attribute.StrictMapping);
+                var _attribute = _Attributes[index];
+                var _property = _Properties[index];
+                var _value = reader[index];
+                SetPropertyValue(_property, _result, _value, _attribute.ReaderDefaultValue, _attribute.StrictMapping);
             }
 
             return _result;
@@ -100,11 +101,11 @@ namespace DevToys.PocoDB.Operations
             _Attributes = new DBFieldAttribute[_readerFieldNames.Length];
             _Properties = new PropertyInfo[_readerFieldNames.Length];
 
-            for (int ii = 0; ii < _readerFieldNames.Length; ii++)
+            for (int index = 0; index < _readerFieldNames.Length; index++)
             {
-                string _name = _readerFieldNames[ii].ToLower();
-                _Attributes[ii] = _attributes[_name];
-                _Properties[ii] = _properties[_name];
+                string _name = _readerFieldNames[index].ToLower();
+                _Attributes[index] = _attributes[_name];
+                _Properties[index] = _properties[_name];
             }
 
             _Initialized = true;

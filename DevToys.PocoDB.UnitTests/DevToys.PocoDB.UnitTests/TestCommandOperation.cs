@@ -37,11 +37,11 @@ namespace DevToys.PocoDB.UnitTests
             {
                 Adress = "",
                 Country = "NLD",
-                HouseNumber = "",
+                HouseNumber = "181",
                 Name = "A Company Name",
                 ZipCode = "4624JC",
                 CompanyType = CompanyType.NV,
-                Text = "Guido Kleijer2"
+                Text = "My Name 2"
             };
 
             operation.ExecuteNonQuery(parameters);
@@ -59,11 +59,11 @@ namespace DevToys.PocoDB.UnitTests
             {
                 Adress = "",
                 Country = "NLD",
-                HouseNumber = "",
+                HouseNumber = "180",
                 Name = "A Company Name",
                 ZipCode = "4624JC",
                 CompanyType = CompanyType.NV,
-                Text = "Guido Kleijer"
+                Text = "My Name"
             };
 
             operation.ExecuteNonQuery(parameters);

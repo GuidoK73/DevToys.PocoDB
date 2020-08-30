@@ -71,10 +71,10 @@ namespace DevToys.PocoDB.Operations
 
             var _table = new DataTable(_TableName);
 
-            for (int xx = 0; xx < _Names.Length; xx++)
+            for (int index = 0; index < _Names.Length; index++)
             {
-                var property = _DBProperties[xx];
-                var column = new DataColumn(_Names[xx], property.PropertyType);
+                var property = _DBProperties[index];
+                var column = new DataColumn(_Names[index], property.PropertyType);
                 _table.Columns.Add(column);
             }
 
@@ -84,11 +84,11 @@ namespace DevToys.PocoDB.Operations
             {
                 var row = _table.NewRow();
 
-                for (int xx = 0; xx < _Names.Length; xx++)
+                for (int index = 0; index < _Names.Length; index++)
                 {
-                    var property = _DBProperties[xx];
-                    var parameter = GetParameter(item, _DbParameters[xx], property);
-                    row[_Names[xx]] = Convert.ChangeType(parameter.Value, property.PropertyType);
+                    var property = _DBProperties[index];
+                    var parameter = GetParameter(item, _DbParameters[index], property);
+                    row[_Names[index]] = Convert.ChangeType(parameter.Value, property.PropertyType);
                 }
 
                 _table.Rows.Add(row);
@@ -146,8 +146,8 @@ namespace DevToys.PocoDB.Operations
                     connection.Open();
                     bulkcopy.DestinationTableName = _TableName;
 
-                    for (int xx = 0; xx < _Names.Length; xx++)
-                        bulkcopy.ColumnMappings.Add(new SqlBulkCopyColumnMapping(_Names[xx], _Names[xx]));
+                    for (int index = 0; index < _Names.Length; index++)
+                        bulkcopy.ColumnMappings.Add(new SqlBulkCopyColumnMapping(_Names[index], _Names[index]));
 
                     bulkcopy.WriteToServer(table);
                 }
@@ -156,7 +156,7 @@ namespace DevToys.PocoDB.Operations
 
         private IEnumerable<TINSERTOBJECT> Repeat(int repeat)
         {
-            for (int ii = 0; ii < repeat; ii++)
+            for (int index = 0; index < repeat; index++)
                 yield return new TINSERTOBJECT();
         }
     }

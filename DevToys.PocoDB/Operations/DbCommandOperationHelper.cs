@@ -11,24 +11,24 @@ namespace DevToys.PocoDB
     {
         private readonly ConnectionConfig _Config;
         private bool _Initialized = false;
-        private List<string> _OutputParameters;
+
+        DBParameterAttribute[] _Attributes;
+        PropertyInfo[] _Properties;
+        List<int> _OutputParameters = new List<int>();
 
         public DbCommandOperationHelper(ConnectionConfig config)
         {
             _Config = config;
         }
 
-        public Dictionary<string, DBParameterAttribute> Attributes { get; private set; }
-
-        public DBCommandAttribute CommandAttribute { get; private set; }
-        public Dictionary<string, PropertyInfo> Properties { get; private set; }
+        public DBCommandAttribute CommandAttribute { get; set; }
 
         public void GetParameters(DbCommand command, TCOMMAND commandObject)
         {
-            foreach (string name in _OutputParameters)
+            foreach (int index in _OutputParameters)
             {
-                DBParameterAttribute _attribute = Attributes[name];
-                PropertyInfo _property = Properties[name];
+                DBParameterAttribute _attribute = _Attributes[index];
+                PropertyInfo _property = _Properties[index];
                 DbParameter _parameter = command.Parameters[_attribute.Name];
 
                 if (!DataUtils.IsSimpleType(_property.PropertyType) || _property.PropertyType.IsEnum)
@@ -50,10 +50,10 @@ namespace DevToys.PocoDB
 
         public void SetParameters(DbCommand command, TCOMMAND commandObject)
         {
-            foreach (string name in Properties.Keys)
+            for (int index = 0; index < _Properties.Count(); index++)
             {
-                var attribute = Attributes[name];
-                var property = Properties[name];
+                var attribute = _Attributes[index];
+                var property = _Properties[index];
 
                 IDbDataParameter parameter = command.CreateParameter();
                 parameter.Direction = attribute.Direction;
@@ -78,18 +78,30 @@ namespace DevToys.PocoDB
 
         private void Init()
         {
-            Attributes = typeof(TCOMMAND).GetProperties().Where(p => p.GetCustomAttribute(typeof(DBParameterAttribute)) != null)
+            Dictionary<string, DBParameterAttribute> _attributes = typeof(TCOMMAND).GetProperties().Where(p => p.GetCustomAttribute(typeof(DBParameterAttribute)) != null)
                 .Select(p => new { Name = p.GetCustomAttribute<DBParameterAttribute>(true).Name, Parameter = p.GetCustomAttribute<DBParameterAttribute>() })
                 .ToDictionary(p => p.Name, p => p.Parameter);
 
-            Properties = typeof(TCOMMAND).GetProperties().Where(p => p.GetCustomAttribute(typeof(DBParameterAttribute)) != null)
+            Dictionary<string, PropertyInfo> _properties = typeof(TCOMMAND).GetProperties().Where(p => p.GetCustomAttribute(typeof(DBParameterAttribute)) != null)
                 .Select(p => new { Name = p.GetCustomAttribute<DBParameterAttribute>(true).Name, Property = p })
                 .ToDictionary(p => p.Name, p => p.Property);
 
-            _OutputParameters = typeof(TCOMMAND).GetProperties().Where(p => p.GetCustomAttribute(typeof(DBParameterAttribute)) != null)
-                .Select(p => p.GetCustomAttribute<DBParameterAttribute>(true)).Where(p => p.Direction == ParameterDirection.InputOutput || p.Direction == ParameterDirection.Output || p.Direction == ParameterDirection.ReturnValue)
-                .Select(p => p.Name)
-                .ToList();
+            _Attributes = new DBParameterAttribute[_attributes.Keys.Count];
+            _Properties = new PropertyInfo[_attributes.Keys.Count];
+
+            int _index = 0;
+           
+            foreach (string key in _attributes.Keys)
+            {
+                var _attribute = _attributes[key];
+                _Attributes[_index] = _attribute;
+                _Properties[_index] = _properties[key];
+
+                if (_attribute.Direction == ParameterDirection.InputOutput ||  _attribute.Direction == ParameterDirection.Output || _attribute.Direction == ParameterDirection.ReturnValue)
+                    _OutputParameters.Add(_index);
+
+                _index++;
+            }
 
             CommandAttribute = GetDBCommandAttribute();
         }

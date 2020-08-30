@@ -11,13 +11,13 @@ namespace DevToys.PocoDB.Utils
 {
     public class BlobStream : Stream
     {
-        private SqlCommand _CommandAppendChunk;
-        private SqlCommand _CommandFirstChunk;
-        private SqlConnection _Connection;
-        private SqlTransaction _Transaction;
+        private readonly SqlCommand _CommandAppendChunk;
+        private readonly SqlCommand _CommandFirstChunk;
+        private readonly SqlConnection _Connection;
+        private readonly SqlTransaction _Transaction;
 
-        private SqlParameter _ParameterChunk;
-        private SqlParameter _ParameterLength;
+        private readonly SqlParameter _ParameterChunk;
+        private readonly SqlParameter _ParameterLength;
 
         private long offset;
 
