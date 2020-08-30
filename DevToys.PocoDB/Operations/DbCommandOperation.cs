@@ -168,31 +168,13 @@ namespace DevToys.PocoDB.Operations
         /// <param name="commandName">Reference to attribute's commandName.</param>
         public IEnumerable<TRESULTOBJECT> ExecuteReader(TCOMMAND commandObject)
         {
-            Init();
-
             using (DbConnection connection = ConnectionFactory.Instance.Create(Config.ConnectionType, Config.ConnectionString))
             {
                 connection.Open();
-                using (DbCommand command = connection.CreateCommand())
-                {
-                    command.CommandText = _Helper.CommandAttribute.CommandText;
-                    command.CommandType = _Helper.CommandAttribute.CommandType;
-                    command.CommandTimeout = _Helper.CommandAttribute.CommandTimeout;
+                var _resultSet = ExecuteReader(connection, null, commandObject);
+                foreach (TRESULTOBJECT result in _resultSet)
+                    yield return result;
 
-                    _Helper.SetParameters(command, commandObject);
-
-                    RaisePreExecute(connection, command);
-
-                    IDataReader reader = command.ExecuteReader();
-
-                    _Helper.GetParameters(command, commandObject);
-
-                    while (reader.Read())
-                    {
-                        TRESULTOBJECT dataobject = ReadDataRow(reader);
-                        yield return dataobject; // returns only when requested by ienumerable.
-                    }
-                }
                 connection.Close();
             }
         }

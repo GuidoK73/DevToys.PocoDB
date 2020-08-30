@@ -155,25 +155,10 @@ namespace DevToys.PocoDB.Operations
             using (DbConnection connection = ConnectionFactory.Instance.Create(Config.ConnectionType, Config.ConnectionString))
             {
                 connection.Open();
-                using (DbCommand command = connection.CreateCommand())
-                {
-                    if (parameters != null)
-                        command.Parameters.AddRange(parameters);
+                var _resultSet = ExecuteReader(connection, null, commandObject);
+                foreach (TRESULTOBJECT result in _resultSet)
+                    yield return result;
 
-                    command.CommandText = commandText;
-                    command.CommandType = commandType;
-
-                    RaisePreExecute(connection, command);
-
-                    using (DbDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            TRESULTOBJECT dataobject = ReadDataRow(reader);
-                            yield return dataobject; // returns only when requested by ienumerable.
-                        }
-                    }
-                }
                 connection.Close();
             }
         }
