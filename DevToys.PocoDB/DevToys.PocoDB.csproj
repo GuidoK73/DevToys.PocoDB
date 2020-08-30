@@ -61,7 +61,6 @@
     <Compile Include="Operations\BulkInsertOperation.cs" />
     <Compile Include="Operations\DbCommandOperation.cs" />
     <Compile Include="Operations\DynamicSqlOperation.cs" />
-    <Compile Include="Operations\SqlOperation.cs" />
     <Compile Include="RandomData\Collections\Cities.cs" />
     <Compile Include="RandomData\Collections\Colors.cs" />
     <Compile Include="RandomData\Collections\Countries.cs" />
