@@ -35,7 +35,7 @@ namespace DevToys.PocoDB.UnitTests
         [TestMethod]
         public void BulkInsertCompanyRandom()
         {
-            BulkInsertOperation<BulkCompanyRandom> operation = new BulkInsertOperation<BulkCompanyRandom>("Local", 512);
+            BulkInsertOperation<BulkCompanyRandom> operation = new BulkInsertOperation<BulkCompanyRandom>("Local", 1024);
             operation.Progress += Operation_Progress;
 
             StopWatch _watch = new StopWatch();

@@ -149,15 +149,15 @@ namespace DevToys.PocoDB.Operations
         /// <returns></returns>
         public IEnumerable<TRESULTOBJECT> ExecuteReader()
         {
-            Type _t = typeof(TCOMMAND);
-            TCOMMAND _parameters = (TCOMMAND)Activator.CreateInstance(_t);
+            Type _type = typeof(TCOMMAND);
+            TCOMMAND _parameters = (TCOMMAND)Activator.CreateInstance(_type);
             return ExecuteReader(_parameters);
         }
 
         public IEnumerable<TRESULTOBJECT> ExecuteReader(DbConnection connection, DbTransaction transaction)
         {
-            Type _t = typeof(TCOMMAND);
-            TCOMMAND _parameters = (TCOMMAND)Activator.CreateInstance(_t);
+            Type _type = typeof(TCOMMAND);
+            TCOMMAND _parameters = (TCOMMAND)Activator.CreateInstance(_type);
             return ExecuteReader(connection, transaction, _parameters);
         }
 
@@ -194,14 +194,14 @@ namespace DevToys.PocoDB.Operations
 
                 RaisePreExecute(connection, command);
 
-                IDataReader reader = command.ExecuteReader();
+                IDataReader _reader = command.ExecuteReader();
 
                 _Helper.GetParameters(command, commandObject);
 
-                while (reader.Read())
+                while (_reader.Read())
                 {
-                    TRESULTOBJECT dataobject = ReadDataRow(reader);
-                    yield return dataobject; // returns only when requested by ienumerable.
+                    TRESULTOBJECT _dataobject = ReadDataRow(_reader);
+                    yield return _dataobject; // returns only when requested by ienumerable.
                 }
             }
         }
