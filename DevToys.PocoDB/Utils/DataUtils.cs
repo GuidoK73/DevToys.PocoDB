@@ -243,25 +243,12 @@ namespace DevToys.PocoDB
             return NetType.String;
         }
 
-        /// <summary>
-        /// TODO: Remove
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <returns></returns>
-        public static List<string> GetReaderColumns(IDataReader reader)
-        {
-            List<string> columns = new List<string>();
-            for (int i = 0; i < reader.FieldCount; i++)
-                columns.Add(reader.GetName(i));
-            return columns;
-        }
-
-        public static string[] GetReaderColumnsArray(IDataReader reader)
+        public static string[] GetReaderColumns(IDataReader reader)
         {
             string[] _result = new string[reader.FieldCount];
 
             for (int i = 0; i < reader.FieldCount; i++)
-                _result[i] = reader.GetName(i);
+                _result[i] = reader.GetName(i).ToLower();
 
             return _result;
         }

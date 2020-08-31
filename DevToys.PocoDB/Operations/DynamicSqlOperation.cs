@@ -21,7 +21,7 @@ namespace DevToys.PocoDB.Operations
     /// <typeparam name=""></typeparam>
     public sealed class DynamicSqlOperation : BaseDataOperation
     {
-        private List<string> readercolumns = null;
+        private string[] _ReaderColumns = null;
 
         /// <param name="configConnectionName">Points to ConnectionString Configuration in section DevToys.PocoDB in App.Config</param>
         public DynamicSqlOperation(string configConnectionName) : base(configConnectionName) { }
@@ -221,10 +221,10 @@ namespace DevToys.PocoDB.Operations
         /// </summary>
         private void Init(IDataReader reader)
         {
-            if (readercolumns != null)
+            if (_ReaderColumns != null)
                 return;
 
-            readercolumns = DataUtils.GetReaderColumns(reader);
+            _ReaderColumns = DataUtils.GetReaderColumns(reader);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace DevToys.PocoDB.Operations
             // create a new base object so we can invoke base methods.
             var dataobject2 = new ExpandoObject();
             var dataobject3 = dataobject2 as IDictionary<string, Object>;
-            foreach (string name in readercolumns)
+            foreach (string name in _ReaderColumns)
                 dataobject3.Add(DataUtils.CleanString(name), reader[name]);
 
             dataobject = dataobject3;

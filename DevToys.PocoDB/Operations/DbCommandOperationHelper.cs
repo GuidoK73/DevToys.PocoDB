@@ -43,7 +43,35 @@ namespace DevToys.PocoDB
             if (_Initialized)
                 return;
 
-            Init();
+            Dictionary<string, DBParameterAttribute> _attributes = new Dictionary<string, DBParameterAttribute>();
+            Dictionary<string, PropertyInfo> _properties = new Dictionary<string, PropertyInfo>();
+
+            foreach (PropertyInfo property in typeof(TCOMMAND).GetProperties())
+            {
+                DBParameterAttribute _attribute = property.GetCustomAttribute<DBParameterAttribute>(true);
+                string _key = _attribute.Name;
+                _attributes.Add(_key, _attribute);
+                _properties.Add(_key, property);
+            }
+
+            _Attributes = new DBParameterAttribute[_attributes.Keys.Count];
+            _Properties = new PropertyInfo[_attributes.Keys.Count];
+
+            int _index = 0;
+
+            foreach (string key in _attributes.Keys)
+            {
+                var _attribute = _attributes[key];
+                _Attributes[_index] = _attribute;
+                _Properties[_index] = _properties[key];
+
+                if (_attribute.Direction == ParameterDirection.InputOutput || _attribute.Direction == ParameterDirection.Output || _attribute.Direction == ParameterDirection.ReturnValue)
+                    _OutputParameters.Add(_index);
+
+                _index++;
+            }
+
+            CommandAttribute = GetDBCommandAttribute();
 
             _Initialized = true;
         }
@@ -73,36 +101,6 @@ namespace DevToys.PocoDB
                     throw new DataException("Required connection type: {0}, not supplied for connectionname: {1} ", _commandAttribute.RequiredConnectionType, _Config.Name);
 
             return _commandAttribute;
-        }
-
-        private void Init()
-        {
-            Dictionary<string, DBParameterAttribute> _attributes = typeof(TCOMMAND).GetProperties().Where(p => p.GetCustomAttribute(typeof(DBParameterAttribute)) != null)
-                .Select(p => new { Name = p.GetCustomAttribute<DBParameterAttribute>(true).Name, Parameter = p.GetCustomAttribute<DBParameterAttribute>() })
-                .ToDictionary(p => p.Name, p => p.Parameter);
-
-            Dictionary<string, PropertyInfo> _properties = typeof(TCOMMAND).GetProperties().Where(p => p.GetCustomAttribute(typeof(DBParameterAttribute)) != null)
-                .Select(p => new { Name = p.GetCustomAttribute<DBParameterAttribute>(true).Name, Property = p })
-                .ToDictionary(p => p.Name, p => p.Property);
-
-            _Attributes = new DBParameterAttribute[_attributes.Keys.Count];
-            _Properties = new PropertyInfo[_attributes.Keys.Count];
-
-            int _index = 0;
-           
-            foreach (string key in _attributes.Keys)
-            {
-                var _attribute = _attributes[key];
-                _Attributes[_index] = _attribute;
-                _Properties[_index] = _properties[key];
-
-                if (_attribute.Direction == ParameterDirection.InputOutput ||  _attribute.Direction == ParameterDirection.Output || _attribute.Direction == ParameterDirection.ReturnValue)
-                    _OutputParameters.Add(_index);
-
-                _index++;
-            }
-
-            CommandAttribute = GetDBCommandAttribute();
         }
     }
 }

@@ -18,7 +18,7 @@ Create table dbo.Company
 (
 	Id int not null identity(1,1) primary key,
 	[Name] varchar(128) not null,
-	Adress varchar(128) not null,
+	Adress varchar(128) null,
 	Country varchar(128) not null,
 	ZipCode varchar(16) not null,
 	HouseNumber varchar(16) not null,

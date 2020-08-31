@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace DevToys.PocoDB.Operations
@@ -41,6 +41,7 @@ namespace DevToys.PocoDB.Operations
         private bool _Initialized = false;
         private PropertyInfo[] _Properties;
 
+
         /// <param name="configConnectionName">Reference to connection in DevToys.PocoDB config section</param>
         protected BaseDataOperation(string configConnectionName) : base(configConnectionName) { }
 
@@ -63,12 +64,7 @@ namespace DevToys.PocoDB.Operations
             var _result = new TRESULTOBJECT();
             // create a new base object so we can invoke base methods.
             for (int index = 0; index < reader.FieldCount; index++)
-            {
-                var _attribute = _Attributes[index];
-                var _property = _Properties[index];
-                var _value = reader[index];
-                SetPropertyValue(_property, _result, _value, _attribute.ReaderDefaultValue, _attribute.StrictMapping);
-            }
+                SetPropertyValue(_Properties[index], _result, reader.GetValue(index), reader.GetFieldType(index), _Attributes[index].ReaderDefaultValue, _Attributes[index].StrictMapping);
 
             return _result;
         }
@@ -78,26 +74,41 @@ namespace DevToys.PocoDB.Operations
             if (_Initialized)
                 return;
 
-            string[] _readerFieldNames = DataUtils.GetReaderColumnsArray(reader);
+            // Get Reader Column names ordered by ordinal
+            string[] _readerFieldNames = DataUtils.GetReaderColumns(reader);
 
-            Dictionary<string, DBFieldAttribute> _attributes = typeof(TRESULTOBJECT)
-                    .GetProperties().Where(p => p.GetCustomAttribute<DBFieldAttribute>() != null)
-                    .Select(p => new { Key = p.GetCustomAttribute<DBFieldAttribute>().Field.ToLower(), Value = p.GetCustomAttribute<DBFieldAttribute>() })
-                    .ToDictionary(p => p.Key, p => p.Value);
+            // Create property and Attribute dictionaries
+            var _attributes = new Dictionary<string, DBFieldAttribute>();
+            var _properties = new Dictionary<string, PropertyInfo>();
 
-            Dictionary<string, PropertyInfo> _properties = typeof(TRESULTOBJECT)
-                .GetProperties().Where(p => p.GetCustomAttribute<DBFieldAttribute>() != null)
-                .Select(p => new { Key = p.GetCustomAttribute<DBFieldAttribute>().Field.ToLower(), Value = p })
-                .ToDictionary(p => p.Key, p => p.Value);
+            foreach (PropertyInfo property in typeof(TRESULTOBJECT).GetProperties())
+            {
+                DBFieldAttribute _attribute = property.GetCustomAttribute<DBFieldAttribute>(false);
+                if (_attribute != null)
+                {
+                    string _key = _attribute.Field.ToLower();
+                    _attributes.Add(_key, _attribute);
+                    _properties.Add(_key, property);
+                }
+            }
 
-            InitValidateFieldNames(_readerFieldNames, _properties);
+            // Validate fieldsnames
+            foreach (string column in _readerFieldNames)
+            {
+                if (!_properties.ContainsKey(column))
+                {
+                    string message = string.Format("Column '{0}' does not exist in the result DataSet.", column);
+                    throw new DataException(message);
+                }
+            }
 
+            // Convert Property / Attribute Dictionaries to Ordinal Array.
             _Attributes = new DBFieldAttribute[_readerFieldNames.Length];
             _Properties = new PropertyInfo[_readerFieldNames.Length];
 
             for (int index = 0; index < _readerFieldNames.Length; index++)
             {
-                string _name = _readerFieldNames[index].ToLower();
+                string _name = _readerFieldNames[index];
                 _Attributes[index] = _attributes[_name];
                 _Properties[index] = _properties[_name];
             }
@@ -105,21 +116,10 @@ namespace DevToys.PocoDB.Operations
             _Initialized = true;
         }
 
-        private void InitValidateFieldNames(string[] _readerFieldNames, Dictionary<string, PropertyInfo> properties)
-        {
-            foreach (string column in properties.Keys)
-            {
-                if (_readerFieldNames.Where(p => p.ToLower().Equals(column, StringComparison.OrdinalIgnoreCase)).FirstOrDefault() == null)
-                {
-                    string message = string.Format("Column '{0}' does not exist in the result DataSet.", column);
-                    throw new DataException(message);
-                }
-            }
-        }
 
-        private void SetPropertyValue(PropertyInfo propertyInfo, TRESULTOBJECT dataobject, object value, object defaultvalue, StrictMapping strictField)
+        private void SetPropertyValue(PropertyInfo propertyInfo, TRESULTOBJECT dataobject, object value, Type valueType, object defaultvalue, StrictMapping strictField)
         {
-            if (value.GetType() == typeof(DBNull))
+            if (value == DBNull.Value || value == null)
             {
                 if (propertyInfo.PropertyType != typeof(string))
                 {
@@ -130,27 +130,28 @@ namespace DevToys.PocoDB.Operations
                 propertyInfo.SetValue(dataobject, defaultvalue, null);
                 return;
             }
-
+           
             if (propertyInfo.PropertyType.IsEnum)
             {
-                propertyInfo.SetValue(dataobject, Enum.Parse(propertyInfo.PropertyType, value.ToString()), null);
+                propertyInfo.SetValue(dataobject, Enum.Parse(propertyInfo.PropertyType, System.Convert.ToString(value)), null);
                 return;
             }
 
-            if ((Config.StrictMapping && strictField == StrictMapping.ByConfigSetting) || strictField == StrictMapping.True)
+            if ((strictField == StrictMapping.ByConfigSetting && Config.StrictMapping) || strictField == StrictMapping.True)
             {
-                if (propertyInfo.PropertyType == value.GetType())
-                    propertyInfo.SetValue(dataobject, value, null);
-                else
-                    throw new DataException("Property '{0}': Type cannot be mapped from '{1}' to '{2}' ", propertyInfo.Name, value.GetType(), propertyInfo.PropertyType);
+                if (propertyInfo.PropertyType == valueType)
+                {
+                    propertyInfo.SetMethod.Invoke(dataobject, new object[] { value });  
+                    return;
+                }
+
+                throw new DataException("Property '{0}': Type cannot be mapped from '{1}' to '{2}' ", propertyInfo.Name, valueType, propertyInfo.PropertyType);
             }
+
+            if (propertyInfo.PropertyType == valueType)
+                propertyInfo.SetMethod.Invoke(dataobject, new object[] { value });
             else
-            {
-                if (propertyInfo.PropertyType == value.GetType())
-                    propertyInfo.SetValue(dataobject, value, null);
-                else
-                    propertyInfo.SetValue(dataobject, Convert.ChangeType(value, propertyInfo.PropertyType, Config.CultureInfo), null);
-            }
+                propertyInfo.SetMethod.Invoke(dataobject, new object[] { Convert.ChangeType(value, propertyInfo.PropertyType, Config.CultureInfo) });
         }
     }
 }

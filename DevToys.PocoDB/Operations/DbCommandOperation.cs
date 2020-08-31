@@ -194,7 +194,7 @@ namespace DevToys.PocoDB.Operations
 
                 RaisePreExecute(connection, command);
 
-                IDataReader _reader = command.ExecuteReader();
+                IDataReader _reader = command.ExecuteReader(CommandBehavior.KeyInfo);
 
                 _Helper.GetParameters(command, commandObject);
 

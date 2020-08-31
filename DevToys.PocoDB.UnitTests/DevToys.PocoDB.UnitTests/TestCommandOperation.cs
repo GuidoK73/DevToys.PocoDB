@@ -1,12 +1,18 @@
-﻿using DevToys.PocoDB.Operations;
+﻿using DevToys.PocoDB.Attributes;
+using DevToys.PocoDB.Operations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PocoDBConsoleAppTest.Data;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace DevToys.PocoDB.UnitTests
 {
+
     [TestClass]
     public class TestCommandOperation
     {
@@ -88,6 +94,25 @@ namespace DevToys.PocoDB.UnitTests
 
             Console.WriteLine(_watch.Duration);
         }
+
+
+        [TestMethod]
+        public void SelectAll_ByRepository()
+        {
+            var operation = new DbCommandOperation<Company, GetCompanyAll>("Local");
+            IEnumerable<Company> _result = operation.ExecuteReader(new GetCompanyAll() { });
+
+            StopWatch _watch = new StopWatch();
+
+            _watch.Start();
+
+            var _resultMaterialized = _result.ToList();
+
+            _watch.Stop();
+
+            Console.WriteLine(_watch.Duration);
+        }
+
 
         [TestMethod]
         public void TestDBStringArrayParameter()

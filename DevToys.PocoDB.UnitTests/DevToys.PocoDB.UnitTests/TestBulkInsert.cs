@@ -42,7 +42,7 @@ namespace DevToys.PocoDB.UnitTests
 
             _watch.Start();
 
-            operation.Insert(100000);
+            operation.Insert(500000);
 
             _watch.Stop();
 
